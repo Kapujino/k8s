@@ -7,13 +7,7 @@ resources:
   - pv.yaml
   - deployment.yaml
   - service.yaml
-  - ingress.yaml
 
 commonLabels:
   app: grafana
-
-#configMapGenerator:
-#  - name: default-env
-#    envs:
-#    - default.env
 

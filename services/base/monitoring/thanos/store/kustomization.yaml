@@ -9,8 +9,3 @@ resources:
 commonLabels:
   app: thanos-store-gateway
 
-configMapGenerator:
- - name: thanos-store-gateway
-   files:
-   - thanos-store-gateway.yaml
-

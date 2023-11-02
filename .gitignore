@@ -3,3 +3,5 @@ kubeadm-config.yaml
 *.env
 **/cert-manager/*
 ingress.yaml
+configmaps
+ingress
