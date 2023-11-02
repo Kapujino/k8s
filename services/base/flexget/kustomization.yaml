@@ -9,11 +9,3 @@ resources:
 commonLabels:
   app: flexget
 
-configMapGenerator:
-  - name: wg-env
-    envs:
-    - default.env 
-  - name: flexget-env
-    envs:
-    - default.env
-    - flexget.env 

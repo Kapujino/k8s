@@ -7,8 +7,3 @@ resources:
 commonLabels:
   app: teamspeak
 
-configMapGenerator:
- - name: teamspeak-env
-   envs:
-   - default.env
-   - teamspeak.env
