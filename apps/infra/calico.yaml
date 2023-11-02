@@ -6,7 +6,7 @@ spec:
   project: default
   source:
     repoURL: 'git@github.com:Kapujino/k8s.git'
-    path: services/infra/calico
+    path: infra/base/calico
     targetRevision: main
   destination:
     server: 'https://kubernetes.default.svc'
