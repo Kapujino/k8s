@@ -47,7 +47,7 @@ spec:
               memory: 750Mi
           envFrom:
             - configMapRef:
-                name: default-env
+                name: default-env-mon
           volumeMounts:
             - mountPath: /var/lib/grafana
               name: grafana-pv

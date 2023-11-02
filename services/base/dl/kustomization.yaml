@@ -9,10 +9,3 @@ resources:
 commonLabels:
   app: dl
 
-configMapGenerator:
- - name: jd-env
-   envs:
-   - jd.env
- - name: jd-wg-env
-   envs:
-   - default.env

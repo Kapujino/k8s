@@ -19,7 +19,7 @@ spec:
             protocol: TCP
           envFrom:
             - configMapRef:
-                name: homeassistant-env
+                name: default-env-internal
           volumeMounts:
           - mountPath: /config/
             name: homeassistant-volume

@@ -4,12 +4,7 @@ kind: Kustomization
 resources:
   - deployment.yaml
   - service.yaml
-  - ingress.yaml
 
 commonLabels:
   app: nextcloud
 
-configMapGenerator:
- - name: nextcloud-env
-   envs:
-   - default.env

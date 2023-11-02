@@ -12,16 +12,8 @@ spec:
         image: quay.io/thanos/thanos:v0.32.5
         args:
         - "query"
-#        - "--config.file=/etc/config/thanos-querier.yaml"
         - "--http-address=0.0.0.0:9090"
         - "--endpoint=dnssrv+_grpc._tcp.prom.monitoring.svc.cluster.local:19090"
         - "--endpoint=dnssrv+_grpc._tcp.thanos-store-gateway.thanos.svc.cluster.local:19090"
         ports:
         - containerPort: 9090
-#        volumeMounts:
-#        - name: thanos-querier-config
-#          mountPath: /etc/config
-#      volumes:
-#      - name: thanos-querier-config
-#        configMap:
-#          name: thanos-querier-config

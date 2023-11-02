@@ -8,8 +8,3 @@ resources:
 commonLabels:
   app: plex
 
-configMapGenerator:
- - name: plex-env
-   envs:
-   - default.env
-   - plex.env

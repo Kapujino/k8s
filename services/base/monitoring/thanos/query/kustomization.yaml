@@ -12,8 +12,3 @@ resources:
 commonLabels:
   app: thanos-querier
 
-#configMapGenerator:
-# - name: thanos-querier-config
-#   files:
-#   - thanos-querier-config.yaml
-

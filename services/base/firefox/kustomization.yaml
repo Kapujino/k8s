@@ -9,10 +9,3 @@ resources:
 commonLabels:
   app: firefox
 
-configMapGenerator:
- - name: firefox-env
-   envs:
-   - firefox.env
- - name: firefox-wg-env
-   envs:
-   - default.env

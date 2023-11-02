@@ -33,7 +33,7 @@ spec:
             privileged: true
           envFrom:
             - configMapRef:
-                name: firefox-wg-env
+                name: default-env-internal
           volumeMounts:
           - mountPath: /config
             name: wireguard-config-volume

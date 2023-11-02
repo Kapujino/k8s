@@ -33,7 +33,7 @@ spec:
             privileged: true
           envFrom:
             - configMapRef:
-                name: wg-env
+                name: default-env-internal
           volumeMounts:
           - mountPath: /config
             name: wg-flexget-config-volume

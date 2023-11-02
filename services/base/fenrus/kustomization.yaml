@@ -4,12 +4,7 @@ kind: Kustomization
 resources:
   - deployment.yaml
   - service.yaml
-  - ingress.yaml
 
 commonLabels:
   app: fenrus
 
-configMapGenerator:
- - name: fenrus-env
-   envs:
-   - default.env

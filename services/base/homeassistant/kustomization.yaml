@@ -5,12 +5,7 @@ namespace: internal
 resources:
   - deployment.yaml
   - service.yaml
-  - ingress.yaml
 
 commonLabels:
   app: homeassistant
 
-configMapGenerator:
- - name: homeassistant-env
-   envs:
-   - default.env

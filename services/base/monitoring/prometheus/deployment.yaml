@@ -32,7 +32,7 @@ spec:
             protocol: TCP
           envFrom:
             - configMapRef:
-                name: default-env
+                name: default-env-mon
           volumeMounts:
           - mountPath: /etc/prometheus
             name: prom-config-volume

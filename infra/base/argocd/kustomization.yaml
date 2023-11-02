@@ -5,7 +5,6 @@ namespace: argocd
 resources:
   - namespace.yaml
   - https://raw.githubusercontent.com/argoproj/argo-cd/v2.8.6/manifests/install.yaml
-  - ingress.yaml
 
 patchesJson6902:
 - target:
@@ -20,5 +19,5 @@ patchesJson6902:
   path: service.yaml
 
 commonLabels:
-  app: argucd
+  app: argocd
 

@@ -5,12 +5,7 @@ namespace: internal
 resources:
   - deployment.yaml
   - service.yaml
-  - ingress.yaml
 
 commonLabels:
   app: tautulli
 
-configMapGenerator:
- - name: tautulli-env
-   envs:
-   - default.env 

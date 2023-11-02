@@ -18,7 +18,7 @@ spec:
             protocol: TCP
           envFrom:
             - configMapRef:
-                name: ombi-env
+                name: default-env
           volumeMounts:
           - mountPath: /config/
             name: ombi-volume

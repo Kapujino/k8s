@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metallb
+spec:
+  project: default
+  source:
+    repoURL: 'git@github.com:Kapujino/k8s.git'
+    path: infra/base/metallb
+    targetRevision: main
+  destination:
+    server: 'https://kubernetes.default.svc'
+#  syncPolicy:
+#    automated: {}

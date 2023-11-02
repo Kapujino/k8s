@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: homeassistant
+spec:
+  project: default
+  source:
+    repoURL: 'git@github.com:Kapujino/k8s.git'
+    path: services/base/homeassistant
+    targetRevision: main
+  destination:
+    server: 'https://kubernetes.default.svc'
+#  syncPolicy:
+#    automated: {}

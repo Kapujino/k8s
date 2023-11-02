@@ -4,6 +4,19 @@ namespace: argocd
 
 resources:
   - monitoring.yaml
+  - flexget.yaml
+  - adguard.yaml
+  - deconz.yaml
+  - dl.yaml
+  - fenrus.yaml
+  - firefox.yaml
+  - homeassistant.yaml
+  - ldap.yaml
+  - nextcloud.yaml
+  - ombi.yaml
+  - plex.yaml
+  - tautulli.yaml
+  - teamspeak.yaml
 
 commonLabels:
-  app.kubernetes.io/instance: services
+  app.kubernetes.io/app-type: services

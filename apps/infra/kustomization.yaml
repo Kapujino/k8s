@@ -4,6 +4,9 @@ namespace: argocd
 
 resources:
   - calico.yaml
+  - ingress-nginx.yaml
+  - metallb.yaml
+  - argocd.yaml
 
 commonLabels:
-  app.kubernetes.io/instance: infra
+  app.kubernetes.io/app-type: infra

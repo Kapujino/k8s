@@ -41,7 +41,7 @@ spec:
             privileged: true
           envFrom:
             - configMapRef:
-                name: jd-wg-env
+                name: default-env-internal
           volumeMounts:
           - mountPath: /config
             name: wg-dl-config-volume

@@ -30,7 +30,7 @@ spec:
             protocol: TCP
           envFrom:
             - configMapRef:
-                name: adguard-env
+                name: default-env
           volumeMounts:
           - mountPath: /opt/adguardhome/conf
             name: adguard-conf-volume
