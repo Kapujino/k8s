@@ -1,0 +1,38 @@
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: default-pool
+  namespace: metallb-system
+spec:
+  addresses:
+  - 192.168.1.210-192.168.1.254
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: default
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+  - default-pool
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: dns-pool
+  namespace: metallb-system
+spec:
+  addresses:
+  - 192.168.0.2/32
+  autoAssign: false
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: dns
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+  - dns-pool
+

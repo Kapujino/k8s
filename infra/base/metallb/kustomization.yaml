@@ -1,0 +1,10 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: metallb-system
+
+#https://metallb.universe.tf/installation/
+resources:
+  - github.com/metallb/metallb/config/native?ref=v0.13.11
+  - metallb_ip_range.yaml
+

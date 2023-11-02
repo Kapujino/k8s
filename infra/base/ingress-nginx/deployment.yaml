@@ -1,0 +1,21 @@
+### set default cert
+- op: add
+  path: /spec/template/spec/containers/0/args/-
+  value: --default-ssl-certificate=default/letsencrypt-cert-secret
+
+- op: add
+  path: /spec/template/spec/hostNetwork
+  value: false
+
+#### needed for the custom-default-backend
+#- op: add
+#  path: /spec/template/spec/containers/0/args/-
+#  value: --default-backend-service=ingress-nginx/nginx-errors
+#
+#### enable Prometheus metrics for ingress nginx
+#- op: add
+#  path: /spec/template/metadata/annotations
+#  value: 
+#    prometheus.io/scrape: "true"
+#    prometheus.io/port: "10254"
+#    prometheus.io/path: "/metrics"

@@ -1,0 +1,33 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.9.3/deploy/static/provider/cloud/deploy.yaml
+
+patches:
+- path: service.yaml
+  target:
+    kind: Service
+    name: ingress-nginx-controller
+    version: v1
+- path: deployment.yaml
+  target:
+    group: apps
+    kind: Deployment
+    name: ingress-nginx-controller
+    version: v1
+- path: ingressclass.yaml
+  target:
+    kind: IngressClass
+    name: nginx
+    version: v1
+- path: configmap.yaml
+  target:
+    kind: ConfigMap
+    name: ingress-nginx-controller
+- path: zbox_pin.yaml
+  target:
+    kind: Deployment
+    name: ingress-nginx-controller
+
