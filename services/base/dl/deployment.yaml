@@ -1,0 +1,83 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dl
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    spec:
+      containers:
+        - name: jd
+          image: ghcr.io/kapujino/docker-jdownloader2:arm64
+          ports:
+          - containerPort: 5900
+            name: jd-tcp
+            protocol: TCP
+          - containerPort: 5900
+            name: jd-udp
+            protocol: UDP
+          - containerPort: 30050
+            name: jd-direct-tcp
+            protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: jd-env
+          volumeMounts:
+          - mountPath: /jDownloader2
+            name: jd-config-volume
+          - mountPath: /downloads
+            name: downloads-volume
+          - mountPath: /watch
+            name: jd-watch-volume
+        - name: wg-dl
+          image: lscr.io/linuxserver/wireguard:latest
+          securityContext:
+            capabilities:
+              add:
+              - NET_ADMIN
+            privileged: true
+          envFrom:
+            - configMapRef:
+                name: jd-wg-env
+          volumeMounts:
+          - mountPath: /config
+            name: wg-dl-config-volume
+          - mountPath: /lib/modules #wg kernel module
+            name: lib-modules
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - rp4node02
+      dnsPolicy: ClusterFirst
+      volumes:
+      - name: jd-config-volume
+        nfs:
+          server: 192.168.1.200
+          path: /volume1/nfs/dockerfiles/volumes/dl/jd
+          readOnly: false
+      - name: downloads-volume
+        hostPath:
+          path: /mnt/downloads
+          type: Directory
+      - name: jd-watch-volume
+        nfs:
+          server: 192.168.1.200
+          path: /volume1/nfs/dockerfiles/volumes/dl/watch
+          readOnly: false
+      - name: wg-dl-config-volume
+        nfs:
+          server: 192.168.1.200
+          path: /volume1/nfs/dockerfiles/volumes/dl/wg
+          readOnly: false
+      - name: lib-modules
+        hostPath:
+          path: /lib/modules
+

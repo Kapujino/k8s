@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fenrus
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    spec:
+      containers:
+        - name: fenrus
+          image: revenz/fenrus
+          ports:
+          - containerPort: 3000
+            name: fenrus-http
+            protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: fenrus-env
+          volumeMounts:
+          - mountPath: /app/data
+            name: fenrus-data
+#images meanwhile in DB
+#          - mountPath: /app/wwwroot/images
+#            name: fenrus-images
+      dnsPolicy: ClusterFirst
+      volumes:
+      - name: fenrus-data
+        nfs:
+          server: 192.168.1.10
+          path: /mnt/ssd/volumes/run/fenrus/data
+          readOnly: false
+#      - name: fenrus-images
+#        nfs:
+#          server: 192.168.1.10
+#          path: /mnt/ssd/volumes/run/fenrus/images
+#          readOnly: false
+

@@ -1,0 +1,86 @@
+##################################################################################
+## NEEDS TO RUN ON ARM64
+##################################################################################
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ldap
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    spec:
+      enableServiceLinks: false
+      containers:
+        - name: ldap
+          image: osixia/openldap
+          ports:
+          - containerPort: 389
+            name: ldap
+            protocol: TCP
+          - containerPort: 636
+            name: ldap-tls
+            protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: ldap-env
+          volumeMounts:
+          - mountPath: /etc/ldap/slapd.d/
+            name: ldap-volume
+          - mountPath: /var/lib/ldap
+            name: ldap-db-volume
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                - arm64
+      dnsPolicy: ClusterFirst
+      volumes:
+      - name: ldap-volume
+        nfs:
+          server: 192.168.1.200
+          path: /volume1/nfs/dockerfiles/volumes/ldap/ldap/
+          readOnly: false
+      - name: ldap-db-volume
+        nfs:
+          server: 192.168.1.200
+          path: /volume1/nfs/dockerfiles/volumes/ldap/db/
+          readOnly: false
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ldap-web
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    spec:
+      containers:
+        - name: ldap-web
+          image: osixia/phpldapadmin
+          ports:
+          - containerPort: 443
+            name: ldap-web
+            protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: ldap-web-env
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                - arm64
+      dnsPolicy: ClusterFirst
+

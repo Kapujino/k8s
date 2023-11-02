@@ -1,0 +1,80 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: compactor
+spec:
+  schedule: "00 23 * * *"
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          securityContext:
+            fsGroup: 1000
+            supplementalGroups:
+              - 0
+            runAsUser: 1000
+            runAsGroup: 1000
+          restartPolicy: Never
+          initContainers:
+            - name: delay-pod-execution
+              image: docker.io/library/busybox
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: DELAY_WINDOW_SECONDS
+                  value: "600"
+              command:
+                - /bin/sh
+                - -c
+                - 'DELAYSEC=$(($RANDOM % ${DELAY_WINDOW_SECONDS:=60})); echo "delay Pod execution for ${DELAYSEC}s... (until $(date -d @$(($(date +%s) + ${DELAYSEC}))))"; sleep ${DELAYSEC}; echo "done..."'
+              resources:
+                limits:
+                  cpu: 100m
+                  memory: 16Mi
+                requests:
+                  cpu: 10m
+                  memory: 1Mi
+          containers:
+            - name: compactor
+              image: quay.io/thanos/thanos:v0.32.5
+              resources:
+                limits:
+                  cpu: "2000m"
+                requests:
+                  cpu: "200m"
+              args:
+                - "compact"
+                - "--objstore.config-file=/etc/config/thanos-compactor.yaml"
+                - "--http-address=0.0.0.0:19191"
+                - "--data-dir=/var/thanos/compact"
+                - "--consistency-delay=30m"
+                - "--retention.resolution-raw=90d"
+                - "--retention.resolution-5m=365d"
+                - "--retention.resolution-1h=0d"
+                - "--downsample.concurrency=1"
+              volumeMounts:
+                - mountPath: /etc/config
+                  name: thanos-compactor
+                - mountPath: /thanos
+                  name: thanos-data-volume
+                - mountPath: /var/thanos/compact
+                  name: thanos-compactor-data
+              ports:
+                - name: http
+                  containerPort: 19191
+              livenessProbe:
+                httpGet:
+                  port: http
+                  path: /-/healthy
+          volumes:
+          - name: thanos-compactor
+            configMap:
+              name: thanos-compactor
+          - name: thanos-data-volume
+            nfs:
+              server: 192.168.1.200
+              path: /volume1/nfs/dockerfiles/volumes/monitoring/thanos/data
+              readOnly: false
+          - name: thanos-compactor-data
+            emptyDir: {}
+

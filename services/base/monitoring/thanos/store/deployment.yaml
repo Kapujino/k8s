@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thanos-store-gateway
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: thanos-store-gateway
+        image: quay.io/thanos/thanos:v0.32.5
+        args:
+        - "store"
+        - "--objstore.config-file=/etc/config/thanos-store-gateway.yaml"
+        - "--data-dir=/var/thanos/store"
+        - "--http-address=0.0.0.0:19191"
+        - "--grpc-address=0.0.0.0:19090"
+        ports:
+        - containerPort: 19090
+          name: grpc
+          protocol: TCP
+        - containerPort: 19191
+          name: http-store
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /etc/config
+          name: thanos-store-gateway
+        - mountPath: /thanos
+          name: thanos-data-volume
+        - mountPath: /var/thanos/store
+          name: thanos-store-data
+      volumes:
+      - name: thanos-store-gateway
+        configMap:
+          name: thanos-store-gateway
+      - name: thanos-data-volume
+        nfs:
+          server: 192.168.1.200
+          path: /volume1/nfs/dockerfiles/volumes/monitoring/thanos/data
+          readOnly: false
+      - name: thanos-store-data
+        emptyDir: {}

@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homeassistant
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    spec:
+      hostNetwork:  true
+      containers:
+        - name: homeassistant
+          image: homeassistant/home-assistant
+          ports:
+          - containerPort: 8123
+            name: homeassistant
+            protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: homeassistant-env
+          volumeMounts:
+          - mountPath: /config/
+            name: homeassistant-volume
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - zbox
+      dnsPolicy: ClusterFirst
+      volumes:
+      - name: homeassistant-volume
+        hostPath:
+          path: /mnt/ssd/volumes/run/homeassistant/
+          type: Directory
+

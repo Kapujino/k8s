@@ -1,0 +1,168 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: plex
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    spec:
+      hostNetwork:  true
+      containers:
+        - name: plex
+          image: lscr.io/linuxserver/plex:latest
+          #image: plexinc/pms-docker
+          # use resources otherwise logs will eat your ephemeral-storage
+          # resulting in root `/` at 100% on nodes and pods becoming 
+          # `evicted`
+#          resources:
+#            requests:
+#              memory: "4Gi"
+#              cpu: "1"
+#              ephemeral-storage: "2Gi"
+#            limits:
+#              memory: "16Gi"
+#              cpu: "2"
+#              ephemeral-storage: "4Gi"
+#          ports:
+#          # https://support.plex.tv/articles/201543147-what-network-ports-do-i-need-to-allow-through-my-firewall/
+#          - containerPort: 32400
+#            name: pms
+#            protocol: TCP
+#          - containerPort: 1900
+#            name: dnla-udp
+#            protocol: UDP
+#          - containerPort: 32469
+#            name: dnla-tcp
+#            protocol: TCP
+#          - containerPort: 3005
+#            name: home-theatre
+#            protocol: TCP
+#          - containerPort: 5353
+#            name: discovery
+#            protocol: TCP
+#          - containerPort: 8324
+#            name: roku
+#            protocol: TCP
+#          - containerPort: 32410
+#            protocol: UDP
+#          - containerPort: 32412
+#            protocol: UDP
+#          - containerPort: 32413
+#            protocol: UDP
+#          - containerPort: 32414
+#            protocol: UDP
+          envFrom:
+            - configMapRef:
+                name: plex-env
+          volumeMounts:
+          - mountPath: /config
+            name: plex-config-volume
+          - mountPath: /serien/serien
+            name: serien
+            readOnly: true
+          - mountPath: /filme/filme
+            name: filme
+            readOnly: true
+          - mountPath: /filme/filme2
+            name: filme2
+            readOnly: true
+          - mountPath: /mixed
+            name: mixed
+            readOnly: true
+          - mountPath: /mixed2
+            name: mixed2
+            readOnly: true
+          - mountPath: /mixed3
+            name: mixed3
+            readOnly: true
+          - mountPath: /musik
+            name: musik
+#          - mountPath: /dev/dri #gpu
+#            name: dri            
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - zbox
+      dnsPolicy: ClusterFirst
+      volumes:
+      - name: plex-config-volume
+        hostPath:
+          path: /mnt/ssd/volumes/plex
+          type: Directory
+      - name: serien
+        hostPath:
+          path: /mnt/array/disk01
+          type: Directory
+      - name: filme
+        hostPath:
+          path: /mnt/array/disk02
+          type: Directory
+      - name: filme2
+        hostPath:
+          path: /mnt/array/disk03
+          type: Directory
+      - name: mixed
+        hostPath:
+          path: /mnt/array/disk04
+          type: Directory
+      - name: mixed2
+        hostPath:
+          path: /mnt/mixed2
+          type: Directory
+      - name: mixed3
+        hostPath:
+          path: /mnt/mixed3
+          type: Directory
+      - name: musik
+        nfs:
+          server: 192.168.1.200
+          path: /volume1/nfs/musik
+          readOnly: true
+#NFS VOLUMES
+#      - name: plex-config-volume
+#        nfs:
+#          server: 192.168.1.10
+#          path: /mnt/ssd/volumes/plex
+#          readOnly: false
+#      - name: serien
+#        nfs:
+#          server: 192.168.1.10
+#          path: /mnt/array/disk01
+#          readOnly: true
+#      - name: filme
+#        nfs:
+#          server: 192.168.1.10
+#          path: /mnt/array/disk02
+#          readOnly: true
+#      - name: filme2
+#        nfs:
+#          server: 192.168.1.10
+#          path: /mnt/array/disk03
+#          readOnly: true
+#      - name: mixed
+#        nfs:
+#          server: 192.168.1.10
+#          path: /mnt/array/disk04
+#          readOnly: true
+#      - name: mixed2
+#        nfs:
+#          server: 192.168.1.10
+#          path: /mnt/mixed2
+#          readOnly: true
+#      - name: musik
+#        nfs:
+#          server: 192.168.1.200
+#          path: /volume1/nfs/musik
+#          readOnly: true
+#      - name: dri
+#        hostPath:
+#          path: /dev/dri
+

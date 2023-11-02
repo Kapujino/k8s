@@ -1,0 +1,71 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flexget
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    spec:
+      containers:
+        - name: flexget
+          image: wiserain/flexget
+          ports:
+          - containerPort: 5050
+            name: flexget-http
+            protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: flexget-env
+          volumeMounts:
+          - mountPath: /config
+            name: flexget-config-volume
+          - mountPath: /data/flexget/direct_links/
+            name: flexget-watch-volume
+        - name: wg-flexget
+          image: linuxserver/wireguard
+          securityContext:
+            capabilities:
+              add:
+              - NET_ADMIN
+            privileged: true
+          envFrom:
+            - configMapRef:
+                name: wg-env
+          volumeMounts:
+          - mountPath: /config
+            name: wg-flexget-config-volume
+          - mountPath: /lib/modules #wg kernel module
+            name: lib-modules
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - rp4node02
+      dnsPolicy: ClusterFirst
+      volumes:
+      - name: flexget-config-volume
+        nfs:
+          server: 192.168.1.200
+          path: /volume1/nfs/dockerfiles/volumes/flexget/config
+          readOnly: false
+      - name: flexget-watch-volume
+        nfs:
+          server: 192.168.1.200
+          path: /volume1/nfs/dockerfiles/volumes/dl/watch
+          readOnly: false
+      - name: wg-flexget-config-volume
+        nfs:
+          server: 192.168.1.200
+          path: /volume1/nfs/dockerfiles/volumes/flexget/wg
+          readOnly: false
+      - name: lib-modules
+        hostPath:
+          path: /lib/modules
+

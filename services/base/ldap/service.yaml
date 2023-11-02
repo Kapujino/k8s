@@ -1,0 +1,39 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ldap
+  labels:
+    app: ldap
+spec:
+  selector:
+    app: ldap
+  type: ClusterIP
+  ports:
+    - name: ldap
+      port: 389
+      protocol: TCP
+      targetPort: ldap
+    - name: ldap-tls
+      port: 636
+      protocol: TCP
+      targetPort: ldap-tls
+  sessionAffinity: None
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ldap-web
+  labels:
+    app: ldap-web
+spec:
+  selector:
+    app: ldap-web
+  type: ClusterIP
+  ports:
+    - name: ldap-web
+      port: 443
+      protocol: TCP
+      targetPort: ldap-web
+  sessionAffinity: None
+

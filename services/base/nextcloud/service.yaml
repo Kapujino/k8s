@@ -1,0 +1,36 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextcloud-http
+spec:
+  type: ClusterIP
+  ports:
+    - name: nextcloud-http
+      port: 80
+      protocol: TCP
+      targetPort: nextcloud-http
+  sessionAffinity: None
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextcloud-db
+spec:
+  type: ClusterIP
+  ports:
+    - name: nextcloud-db
+      port: 3306
+      protocol: TCP
+      targetPort: nextcloud-db
+  sessionAffinity: None
+#---
+#kind: Service
+#apiVersion: v1
+#metadata:
+#  name: ldap
+##  namespace: nextcloud
+#spec:
+#  type: ExternalName
+#  externalName: ldap.default.svc.cluster.local
+

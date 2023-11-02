@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ombi
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    spec:
+      containers:
+        - name: ombi
+          image: lscr.io/linuxserver/ombi:latest
+          ports:
+          - containerPort: 3579
+            name: ombi-http
+            protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: ombi-env
+          volumeMounts:
+          - mountPath: /config/
+            name: ombi-volume
+      dnsPolicy: ClusterFirst
+      volumes:
+      - name: ombi-volume
+        nfs:
+          server: 192.168.1.200
+          path: /volume1/nfs/dockerfiles/volumes/ombi/
+          readOnly: false
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
+              weight: 100
+

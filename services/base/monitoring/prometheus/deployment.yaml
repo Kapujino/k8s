@@ -1,0 +1,101 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prom
+  namespace: default
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+    spec:
+      securityContext:
+        fsGroup: 1000
+        supplementalGroups:
+          - 0
+        runAsUser: 1000
+        runAsGroup: 1000
+      containers:
+        - name: prom
+          image: prom/prometheus
+          args:
+            - "--web.enable-admin-api"
+            - "--web.enable-lifecycle"
+            - "--config.file=/etc/prometheus/prometheus.yml"
+            - "--storage.tsdb.min-block-duration=2h"
+            - "--storage.tsdb.max-block-duration=2h"
+          ports:
+          - containerPort: 9090
+            name: prom-http
+            protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: default-env
+          volumeMounts:
+          - mountPath: /etc/prometheus
+            name: prom-config-volume
+          - mountPath: /prometheus
+            name: prom-tsdb-volume
+        - name: thanos-sidecar
+          image: quay.io/thanos/thanos:v0.32.5
+          args:
+          - "sidecar"
+          - "--tsdb.path=/prometheus"
+          - "--prometheus.url=http://localhost:9090"
+          - "--objstore.config-file=/etc/config/thanos-sidecar.yaml"
+          - "--http-address=0.0.0.0:19191"
+          - "--grpc-address=0.0.0.0:19090"
+          ports:
+          - containerPort: 19090
+            name: grpc
+            protocol: TCP
+          - containerPort: 19191
+            name: http-sidecar
+            protocol: TCP
+          volumeMounts:
+          - mountPath: /etc/config
+            name: thanos-config
+          - mountPath: /thanos
+            name: thanos-data-volume
+          - mountPath: /prometheus
+            name: prom-tsdb-volume
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+      dnsPolicy: ClusterFirst
+      volumes:
+      - name: prom-config-volume
+        nfs:
+          server: 192.168.1.200
+          path: /volume1/nfs/dockerfiles/volumes/monitoring/prometheus/config
+          readOnly: false
+      - name: prom-tsdb-volume
+        nfs:
+          server: 192.168.1.200
+          path: /volume1/nfs/dockerfiles/volumes/monitoring/prometheus/tsdb
+          readOnly: false
+      - name: thanos-config
+        configMap:
+          name: thanos-sidecar-config
+      - name: thanos-data-volume
+        nfs:
+          server: 192.168.1.200
+          path: /volume1/nfs/dockerfiles/volumes/monitoring/thanos/data
+          readOnly: false
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - arm64
+              weight: 100
+

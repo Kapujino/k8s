@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tautulli
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    spec:
+      containers:
+        - name: tautulli
+          image: tautulli/tautulli
+          ports:
+          - containerPort: 8181
+            name: tautulli
+            protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: tautulli-env
+          volumeMounts:
+          - mountPath: /config/
+            name: tautulli-volume
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - arm64
+              weight: 100
+      dnsPolicy: ClusterFirst
+      volumes:
+      - name: tautulli-volume
+        nfs:
+          server: 192.168.1.10
+          path: /mnt/ssd/volumes/run/tautulli
+          readOnly: false
+

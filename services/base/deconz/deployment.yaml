@@ -1,0 +1,54 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deconz
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    spec:
+      hostNetwork: true
+      containers:
+        - name: deconz
+          image: deconzcommunity/deconz
+          securityContext:
+            privileged: true
+#          ports:
+#          - containerPort: 8880
+#            name: deconz
+#            protocol: TCP
+#          - containerPort: 4443
+#            name: deconz
+#            protocol: TCP
+#          - containerPort: 5900
+#            name: deconz
+#            protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: deconz-env
+          volumeMounts:
+          - mountPath: /opt/deCONZ
+            name: deconz-volume
+          - mountPath: /dev/ttyACM0 #conbee2
+            name: ttyacm
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - zbox
+      dnsPolicy: ClusterFirst
+      volumes:
+      - name: deconz-volume
+        nfs:
+          server: 192.168.1.200
+          path: /volume1/nfs/dockerfiles/volumes/deconz/
+          readOnly: false
+      - name: ttyacm
+        hostPath:
+          path: /dev/ttyACM0

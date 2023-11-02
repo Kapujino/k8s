@@ -1,0 +1,116 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextcloud
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    spec:
+      containers:
+        - name: nextcloud
+#          image: lscr.io/linuxserver/nextcloud:version-27.0.1
+          image: lscr.io/linuxserver/nextcloud:27.1.2
+          ports:
+          - containerPort: 80
+            name: nextcloud-http
+            protocol: TCP
+          - containerPort: 443
+            name: nextcloud-https
+            protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: nextcloud-env
+          volumeMounts:
+          - mountPath: /config/
+            name: nextcloud-volume
+          - mountPath: /data/
+            name: nextcloud-data-volume
+      dnsPolicy: ClusterFirst
+      volumes:
+      - name: nextcloud-volume
+        nfs:
+          server: 192.168.1.10
+          path: /mnt/ssd/volumes/nextcloud/nextcloud
+          readOnly: false
+      - name: nextcloud-data-volume
+        nfs:
+          server: 192.168.1.200
+          path: /volume1/nfs/dockerfiles/volumes/nextcloud/data
+          readOnly: false
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
+              weight: 100
+        podAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - nextcloud
+                topologyKey: kubernetes.io/hostname
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextcloud-db
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    spec:
+      containers:
+        - name: nextcloud-db
+          image: linuxserver/mariadb
+          ports:
+          - containerPort: 3306
+            name: nextcloud-db
+            protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: nextcloud-env
+          volumeMounts:
+          - mountPath: /config/
+            name: nextcloud-db-volume
+      dnsPolicy: ClusterFirst
+      volumes:
+      - name: nextcloud-db-volume
+        nfs:
+          server: 192.168.1.10
+          path: /mnt/ssd/volumes/nextcloud/db
+          readOnly: false
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
+              weight: 100
+        podAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - nextcloud
+                topologyKey: kubernetes.io/hostname
+
