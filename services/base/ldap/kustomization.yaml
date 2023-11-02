@@ -8,12 +8,3 @@ resources:
 commonLabels:
   app: ldap
 
-configMapGenerator:
- - name: ldap-env
-   envs:
-   - default.env
-   - ldap.env
- - name: ldap-web-env
-   envs:
-   - default.env
-   - ldap-web.env
