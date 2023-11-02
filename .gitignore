@@ -1,0 +1,5 @@
+kubeadm-config.yaml
+.etc
+*.env
+**/cert-manager/*
+ingress.yaml
