@@ -15,7 +15,7 @@ spec:
       enableServiceLinks: false
       containers:
         - name: ldap
-          image: osixia/openldap
+          image: osixia/openldap:1.5.0
           ports:
           - containerPort: 389
             name: ldap
@@ -65,7 +65,7 @@ spec:
     spec:
       containers:
         - name: ldap-web
-          image: osixia/phpldapadmin
+          image: osixia/phpldapadmin:0.9.0
           ports:
           - containerPort: 443
             name: ldap-web

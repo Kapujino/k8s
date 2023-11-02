@@ -33,7 +33,7 @@ spec:
           - mountPath: /watch
             name: jd-watch-volume
         - name: wg-dl
-          image: lscr.io/linuxserver/wireguard:latest
+          image: lscr.io/linuxserver/wireguard:1.0.20210914
           securityContext:
             capabilities:
               add:

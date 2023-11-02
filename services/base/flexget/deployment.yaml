@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: flexget
-          image: wiserain/flexget
+          image: wiserain/flexget:3.9.16
           ports:
           - containerPort: 5050
             name: flexget-http
@@ -25,7 +25,7 @@ spec:
           - mountPath: /data/flexget/direct_links/
             name: flexget-watch-volume
         - name: wg-flexget
-          image: linuxserver/wireguard
+          image: linuxserver/wireguard:1.0.20210914
           securityContext:
             capabilities:
               add:

@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: firefox
-          image: jlesage/firefox
+          image: jlesage/firefox:v23.08.2
           ports:
           - containerPort: 5900
             name: firefox-tcp
@@ -28,7 +28,7 @@ spec:
           - mountPath: /config/downloads
             name: watch-volume
         - name: wireguard
-          image: linuxserver/wireguard
+          image: linuxserver/wireguard:1.0.20210914
           securityContext:
             privileged: true
           envFrom:
