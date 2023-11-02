@@ -10,11 +10,3 @@ resources:
 commonLabels:
   app: prom
 
-configMapGenerator:
-  - name: default-env
-    envs:
-    - default.env
-  - name: thanos-sidecar-config
-    files:
-    - thanos-sidecar.yaml
-
