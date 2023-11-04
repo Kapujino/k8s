@@ -10,5 +10,5 @@ spec:
     targetRevision: main
   destination:
     server: 'https://kubernetes.default.svc'
-#  syncPolicy:
-#    automated: {}
+  syncPolicy:
+    automated: {}

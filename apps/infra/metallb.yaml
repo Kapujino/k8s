@@ -25,4 +25,5 @@ spec:
     syncOptions:
     - RespectIgnoreDifferences=true
     - ApplyOutOfSyncOnly=true
+    automated: {}
 

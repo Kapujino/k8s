@@ -22,3 +22,4 @@ spec:
     - RespectIgnoreDifferences=true
     - ApplyOutOfSyncOnly=true
     - Prune=false
+    automated: {}

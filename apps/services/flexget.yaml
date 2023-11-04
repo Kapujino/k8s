@@ -10,5 +10,10 @@ spec:
     targetRevision: main
   destination:
     server: 'https://kubernetes.default.svc'
-#  syncPolicy:
-#    automated: {}
+  ignoreDifferences:
+  - group: "apps"
+    kind: "Deployment"
+    jsonPointers:
+    - /spec/replicas
+  syncPolicy:
+    automated: {}
