@@ -10,5 +10,15 @@ spec:
     targetRevision: main
   destination:
     server: 'https://kubernetes.default.svc'
-#  syncPolicy:
-#    automated: {}
+  ignoreDifferences:
+  - group: ""
+    kind: "Secret"
+    name: "argocd-secret"
+    namespace: "argocd"
+    jsonPointers:
+    - /data
+  syncPolicy:
+    syncOptions:
+    - RespectIgnoreDifferences=true
+    - ApplyOutOfSyncOnly=true
+    - Prune=false
