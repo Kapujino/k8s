@@ -1,0 +1,26 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: deconz-ws
+spec:
+  type: NodePort
+  ports:
+    - name: deconz-ws
+      port: 4443
+      protocol: TCP
+      nodePort: 32000
+      targetPort: deconz-ws
+  sessionAffinity: None
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: deconz-web
+spec:
+  ports:
+    - name: deconz-web
+      port: 8880
+      protocol: TCP
+      targetPort: deconz-web
+  sessionAffinity: None

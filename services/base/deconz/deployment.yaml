@@ -15,16 +15,16 @@ spec:
           image: deconzcommunity/deconz:2.24.1
           securityContext:
             privileged: true
-#          ports:
-#          - containerPort: 8880
-#            name: deconz
-#            protocol: TCP
-#          - containerPort: 4443
-#            name: deconz
-#            protocol: TCP
-#          - containerPort: 5900
-#            name: deconz
-#            protocol: TCP
+          ports:
+          - containerPort: 8880
+            name: deconz-web
+            protocol: TCP
+          - containerPort: 4443
+            name: deconz-ws
+            protocol: TCP
+          - containerPort: 5900
+            name: deconz-vnc
+            protocol: TCP
           envFrom:
             - configMapRef:
                 name: deconz-env

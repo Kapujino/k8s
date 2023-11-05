@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: internal
 
 resources:
+  - service.yaml
   - deployment.yaml
 
 commonLabels:
