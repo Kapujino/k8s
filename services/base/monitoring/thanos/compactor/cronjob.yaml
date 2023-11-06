@@ -4,7 +4,7 @@ metadata:
   name: compactor
 spec:
   schedule: "00 23 * * *"
-  successfulJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 10
   jobTemplate:
     spec:
       template:
