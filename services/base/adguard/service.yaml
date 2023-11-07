@@ -2,94 +2,132 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: adguard-dns-tcp
+  name: adguard
   annotations:
-#not supported when sharing IP's
-#    metallb.universe.tf/loadBalancerIPs: 192.168.0.2
-    metallb.universe.tf/allow-shared-ip: "ultra-secret-key" 
+    metallb.universe.tf/loadBalancerIPs: 192.168.0.2
 spec:
   type: LoadBalancer
-#this is required when sharing IP's, see metallb docs
-  loadBalancerIP: 192.168.0.2
   ports:
     - name: adguard-dns-tcp
       port: 53
       protocol: TCP
       targetPort: adguard-dns-tcp
-  sessionAffinity: None
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: adguard-dns-udp
-  annotations:
-#not supported when sharing IP's
-#    metallb.universe.tf/loadBalancerIPs: 192.168.0.2
-    metallb.universe.tf/allow-shared-ip: "ultra-secret-key" 
-spec:
-  type: LoadBalancer
-#this is required when sharing IP's, see metallb docs
-  loadBalancerIP: 192.168.0.2
-  ports:
     - name: adguard-dns-udp
       port: 53
       protocol: UDP
       targetPort: adguard-dns-udp
-  sessionAffinity: None
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: adguard-http
-  annotations:
-#not supported when sharing IP's
-#    metallb.universe.tf/loadBalancerIPs: 192.168.0.2
-    metallb.universe.tf/allow-shared-ip: "ultra-secret-key" 
-spec:
-  type: LoadBalancer
-#this is required when sharing IP's, see metallb docs
-  loadBalancerIP: 192.168.0.2
-  ports:
     - name: adguard-http
       port: 80
       protocol: TCP
       targetPort: adguard-http
-  sessionAffinity: None
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: adguard-https
-  annotations:
-#not supported when sharing IP's
-#    metallb.universe.tf/loadBalancerIPs: 192.168.0.2
-    metallb.universe.tf/allow-shared-ip: "ultra-secret-key" 
-spec:
-  type: LoadBalancer
-#this is required when sharing IP's, see metallb docs
-  loadBalancerIP: 192.168.0.2
-  ports:
     - name: adguard-https
       port: 443
       protocol: TCP
       targetPort: adguard-https
-  sessionAffinity: None
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: adguard-web
-  annotations:
-#not supported when sharing IP's
-#    metallb.universe.tf/loadBalancerIPs: 192.168.0.2
-    metallb.universe.tf/allow-shared-ip: "ultra-secret-key" 
-spec:
-  type: LoadBalancer
-#this is required when sharing IP's, see metallb docs
-  loadBalancerIP: 192.168.0.2
-  ports:
     - name: adguard-web
       port: 3000
       protocol: TCP
       targetPort: adguard-web
   sessionAffinity: None
+  externalTrafficPolicy: Local
+
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: adguard-dns-tcp
+#  annotations:
+##not supported when sharing IP's
+##    metallb.universe.tf/loadBalancerIPs: 192.168.0.2
+#    metallb.universe.tf/allow-shared-ip: "ultra-secret-key" 
+#spec:
+#  type: LoadBalancer
+##this is required when sharing IP's, see metallb docs
+#  loadBalancerIP: 192.168.0.2
+#  ports:
+#    - name: adguard-dns-tcp
+#      port: 53
+#      protocol: TCP
+#      targetPort: adguard-dns-tcp
+#  sessionAffinity: None
+#  externalTrafficPolicy: Local
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: adguard-dns-udp
+#  annotations:
+##not supported when sharing IP's
+##    metallb.universe.tf/loadBalancerIPs: 192.168.0.2
+#    metallb.universe.tf/allow-shared-ip: "ultra-secret-key" 
+#spec:
+#  type: LoadBalancer
+##this is required when sharing IP's, see metallb docs
+#  loadBalancerIP: 192.168.0.2
+#  ports:
+#    - name: adguard-dns-udp
+#      port: 53
+#      protocol: UDP
+#      targetPort: adguard-dns-udp
+#  sessionAffinity: None
+#  externalTrafficPolicy: Local
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: adguard-http
+#  annotations:
+##not supported when sharing IP's
+##    metallb.universe.tf/loadBalancerIPs: 192.168.0.2
+#    metallb.universe.tf/allow-shared-ip: "ultra-secret-key" 
+#spec:
+#  type: LoadBalancer
+##this is required when sharing IP's, see metallb docs
+#  loadBalancerIP: 192.168.0.2
+#  ports:
+#    - name: adguard-http
+#      port: 80
+#      protocol: TCP
+#      targetPort: adguard-http
+#  sessionAffinity: None
+#  externalTrafficPolicy: Local
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: adguard-https
+#  annotations:
+##not supported when sharing IP's
+##    metallb.universe.tf/loadBalancerIPs: 192.168.0.2
+#    metallb.universe.tf/allow-shared-ip: "ultra-secret-key" 
+#spec:
+#  type: LoadBalancer
+##this is required when sharing IP's, see metallb docs
+#  loadBalancerIP: 192.168.0.2
+#  ports:
+#    - name: adguard-https
+#      port: 443
+#      protocol: TCP
+#      targetPort: adguard-https
+#  sessionAffinity: None
+#  externalTrafficPolicy: Local
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: adguard-web
+#  annotations:
+##not supported when sharing IP's
+##    metallb.universe.tf/loadBalancerIPs: 192.168.0.2
+#    metallb.universe.tf/allow-shared-ip: "ultra-secret-key" 
+#spec:
+#  type: LoadBalancer
+##this is required when sharing IP's, see metallb docs
+#  loadBalancerIP: 192.168.0.2
+#  ports:
+#    - name: adguard-web
+#      port: 3000
+#      protocol: TCP
+#      targetPort: adguard-web
+#  sessionAffinity: None
+#  externalTrafficPolicy: Local
