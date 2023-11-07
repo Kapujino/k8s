@@ -16,6 +16,9 @@ metadata:
 spec:
   ipAddressPools:
   - default-pool
+  interfaces:
+  - eth0
+  - eno1
 ---
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
@@ -35,4 +38,7 @@ metadata:
 spec:
   ipAddressPools:
   - dns-pool
+  interfaces:
+  - eth0
+  - eno1
 
