@@ -1,0 +1,65 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: adguard
+spec:
+  replicas: 3
+  template:
+    spec:
+      containers:
+        - name: adguard
+          image: adguard/adguardhome:v0.107.40
+          ports:
+          - containerPort: 53
+            name: adguard-dns-tcp
+            protocol: TCP
+          - containerPort: 53
+            name: adguard-dns-udp
+            protocol: UDP
+          - containerPort: 80
+            name: adguard-http
+            protocol: TCP
+          - containerPort: 443
+            name: adguard-https
+            protocol: TCP
+          - containerPort: 3000
+            name: adguard-web
+            protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: default-env
+          volumeMounts:
+          - mountPath: /opt/adguardhome/conf
+            name: adguard-config-pvc
+          - mountPath: /opt/adguardhome/work
+            name: adguard-data-pvc
+      dnsPolicy: ClusterFirst
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - arm64
+              weight: 100
+  volumeClaimTemplates:
+  - metadata:
+      name: adguard-config-pvc
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: nfs-client
+      resources:
+        requests:
+          storage: 1Gi
+  - metadata:
+      name: adguard-data-pvc
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: nfs-client
+      resources:
+        requests:
+          storage: 1Gi
+
