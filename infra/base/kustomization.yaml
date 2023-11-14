@@ -8,3 +8,4 @@ resources:
   - metallb
   - calico
   - argocd
+  - storage
