@@ -5,7 +5,6 @@ namespace: nfs-provisioner
 resources:
   - namespace.yaml
   - github.com/kubernetes-sigs/nfs-subdir-external-provisioner/deploy
-#  - nfs-storage-class.yaml
 
 patchesStrategicMerge:
   - patch_nfs.yaml
