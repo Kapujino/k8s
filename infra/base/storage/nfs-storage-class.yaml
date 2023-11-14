@@ -1,0 +1,10 @@
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: nfs-storage
+provisioner: kubernetes.io/nfs
+parameters:
+  nfsServer: 192.168.1.200
+  nfsPath: /volume1/nfs/dockerfiles/volumes/dynamic
+
