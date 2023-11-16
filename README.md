@@ -6,8 +6,10 @@ This repo contains my kubernetes configuration, including deployments, patches, 
 
 Explicitly excluded are ingress routes, configmaps and cert-manager.
 
-Argocd apps are located in apps/
-Infrastructure critical deployments are located in infra/base/
-Everything else is located in services/base/
+- Argocd apps are located in apps/
+- Infrastructure critical deployments are located in infra/base/
+- Everything else is located in services/base/
+
+
 
 Feel free to copy and/or take inspiration from that.
