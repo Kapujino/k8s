@@ -74,7 +74,7 @@ spec:
     spec:
       containers:
         - name: nextcloud-db
-          image: linuxserver/mariadb:10.11.5
+          image: lscr.io/linuxserver/mariadb:10.11.5
           ports:
           - containerPort: 3306
             name: nextcloud-db
