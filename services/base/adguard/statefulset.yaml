@@ -36,15 +36,26 @@ spec:
             name: adguard-data-pvc
       dnsPolicy: ClusterFirst
       affinity:
-        nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - preference:
+#don't spawn label adguard on the same node
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
                 matchExpressions:
-                  - key: kubernetes.io/arch
+                  - key: app
                     operator: In
                     values:
-                      - arm64
-              weight: 100
+                      - adguard
+              topologyKey: "kubernetes.io/hostname"
+#prefer ARM nodes
+#        nodeAffinity:
+#          preferredDuringSchedulingIgnoredDuringExecution:
+#            - preference:
+#                matchExpressions:
+#                  - key: kubernetes.io/arch
+#                    operator: In
+#                    values:
+#                      - arm64
+#              weight: 100
   volumeClaimTemplates:
   - metadata:
       name: adguard-config-pvc
