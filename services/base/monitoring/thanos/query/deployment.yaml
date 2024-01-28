@@ -9,7 +9,7 @@ spec:
       serviceAccountName: thanos-querier
       containers:
       - name: thanos-querier
-        image: quay.io/thanos/thanos:v0.33.0
+        image: quay.io/thanos/thanos:v0.34.0
         args:
         - "query"
         - "--http-address=0.0.0.0:9090"
