@@ -17,6 +17,7 @@ resources:
   - plex.yaml
   - tautulli.yaml
   - teamspeak.yaml
+  - tdarr.yaml
 
 commonLabels:
   app.kubernetes.io/app-type: services

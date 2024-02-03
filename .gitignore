@@ -3,3 +3,4 @@ kubeadm-config.yaml
 **/cert-manager/*
 configmaps
 ingress
+helm

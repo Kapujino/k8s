@@ -10,11 +10,14 @@ resources:
   - firefox
   - flexget
   - homeassistant
+  - kc16
+  - kc21
   - ldap
   - monitoring
   - nextcloud
   - ombi
   - plex
   - tautulli
+  - tdarr
   - teamspeak
 
