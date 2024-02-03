@@ -1,4 +1,7 @@
 ### MetalLB will always use this IP for the ingress nginx loadbalances service
+- op: replace
+  path: /spec/type
+  value: LoadBalancer
 - op: add
   path: /metadata/annotations/metallb.universe.tf~1ip-allocated-from-pool
   value: default-pool
