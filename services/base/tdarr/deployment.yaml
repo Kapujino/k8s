@@ -1,0 +1,67 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tdarr
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    spec:
+      containers:
+        - name: tdarr
+          image: ghcr.io/haveagitgat/tdarr:2.17.01
+          ports:
+          - containerPort: 8265
+            name: tdarr-ui
+            protocol: TCP
+          - containerPort: 8266
+            name: tdarr-server
+            protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: tdarr-env
+          volumeMounts:
+          - mountPath: /app/server
+            name: tdarr-server
+          - mountPath: /app/configs
+            name: tdarr-configs
+          - mountPath: /app/logs
+            name: tdarr-logs
+          - mountPath: /media
+            name: tdarr-media
+          - mountPath: /temp
+            name: tdarr-cache
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - arm64
+              weight: 100
+      dnsPolicy: ClusterFirst
+      volumes:
+      - name: tdarr-server
+        nfs:
+          server: 192.168.1.200
+          path: /volume1/nfs/dockerfiles/volumes/tdarr/server
+      - name: tdarr-configs
+        nfs:
+          server: 192.168.1.200
+          path: /volume1/nfs/dockerfiles/volumes/tdarr/configs
+      - name: tdarr-logs
+        nfs:
+          server: 192.168.1.200
+          path: /volume1/nfs/dockerfiles/volumes/tdarr/logs
+      - name: tdarr-media
+        nfs:
+          server: 192.168.1.10
+          path: /mnt/array
+      - name: tdarr-cache
+        nfs:
+          server: 192.168.1.10
+          path: /mnt/ssd/cache
