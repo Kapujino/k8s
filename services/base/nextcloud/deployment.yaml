@@ -22,7 +22,7 @@ spec:
             protocol: TCP
           envFrom:
             - configMapRef:
-                name: default-env
+                name: nextcloud-env
           volumeMounts:
           - mountPath: /config/
             name: nextcloud-volume
