@@ -8,3 +8,4 @@ resources:
 
 patchesStrategicMerge:
   - patch_nfs.yaml
+  - patch_reclaimPolicy.yaml
