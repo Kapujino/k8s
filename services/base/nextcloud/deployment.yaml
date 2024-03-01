@@ -12,7 +12,7 @@ spec:
       containers:
         - name: nextcloud
 #          image: lscr.io/linuxserver/nextcloud:version-27.0.1
-          image: lscr.io/linuxserver/nextcloud:28.0.2
+          image: lscr.io/linuxserver/nextcloud:28.0.3
           ports:
           - containerPort: 80
             name: nextcloud-http
