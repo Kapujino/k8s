@@ -94,8 +94,9 @@ spec:
       dnsPolicy: ClusterFirst
       volumes:
       - name: plex-config-volume
-        hostPath:
-          path: /mnt/ssd/volumes/plex
+        nfs:
+          server: 192.168.1.200
+          path: /volume1/nfs/dockerfiles/volumes/plex
           type: Directory
       - name: serien
         hostPath:
