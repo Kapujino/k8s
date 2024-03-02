@@ -97,7 +97,6 @@ spec:
         nfs:
           server: 192.168.1.200
           path: /volume1/nfs/dockerfiles/volumes/plex
-          type: Directory
       - name: serien
         hostPath:
           path: /mnt/array/disk01
