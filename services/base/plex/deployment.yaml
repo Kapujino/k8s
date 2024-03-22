@@ -96,10 +96,14 @@ spec:
                 - zbox
       dnsPolicy: ClusterFirst
       volumes:
+      #- name: plex-config-volume
+      #  nfs:
+      #    server: 192.168.1.200
+      #    path: /volume1/nfs/dockerfiles/volumes/plex
       - name: plex-config-volume
-        nfs:
-          server: 192.168.1.200
-          path: /volume1/nfs/dockerfiles/volumes/plex
+        hostPath:
+          path: /mnt/volumes/ssd/plex
+          type: Directory
       - name: plexcache
         hostPath:
           path: /mnt/ssd/plexcache
