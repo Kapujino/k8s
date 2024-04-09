@@ -60,7 +60,7 @@ spec:
       - name: tdarr-media
         nfs:
           server: 192.168.1.10
-          path: /mnt/array
+          path: /mnt
       - name: tdarr-cache
         nfs:
           server: 192.168.1.10
