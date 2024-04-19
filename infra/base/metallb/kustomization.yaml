@@ -5,6 +5,6 @@ namespace: metallb-system
 
 #https://metallb.universe.tf/installation/
 resources:
-  - github.com/metallb/metallb/config/native?ref=v0.14.4
+  - github.com/metallb/metallb/config/native?ref=v0.14.5
   - metallb_ip_range.yaml
 
