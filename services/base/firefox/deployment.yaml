@@ -39,6 +39,10 @@ spec:
             name: wireguard-config-volume
           - mountPath: /lib/modules #wg kernel module
             name: lib-modules
+      hostAliases:
+      - ip: "192.168.1.104"
+        hostnames:
+        - "192-168-1-104.mydns.jdownloader.org"
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
