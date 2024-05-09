@@ -19,7 +19,7 @@ spec:
         runAsGroup: 1000
       containers:
         - name: prom
-          image: prom/prometheus:v2.51.2
+          image: prom/prometheus:v2.52.0
           args:
           - "--storage.tsdb.path=/prometheus"
           - "--web.enable-admin-api"
