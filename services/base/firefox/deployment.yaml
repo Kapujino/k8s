@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: firefox
-          image: jlesage/firefox:v24.09.1
+          image: jlesage/firefox:v24.10.1
           ports:
           - containerPort: 5900
             name: firefox-tcp
