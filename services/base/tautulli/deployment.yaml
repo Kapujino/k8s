@@ -24,14 +24,23 @@ spec:
             name: tautulli-volume
       affinity:
         nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - preference:
-                matchExpressions:
-                  - key: kubernetes.io/arch
-                    operator: In
-                    values:
-                      - arm64
-              weight: 100
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - rp4node01
+#      affinity:
+#        nodeAffinity:
+#          preferredDuringSchedulingIgnoredDuringExecution:
+#            - preference:
+#                matchExpressions:
+#                  - key: kubernetes.io/arch
+#                    operator: In
+#                    values:
+#                      - arm64
+#              weight: 100
       dnsPolicy: ClusterFirst
       volumes:
       - name: tautulli-volume
