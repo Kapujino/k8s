@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: tdarr
-          image: ghcr.io/haveagitgat/tdarr:2.34.01
+          image: ghcr.io/haveagitgat/tdarr:2.35.02
           ports:
           - containerPort: 8265
             name: tdarr-ui
