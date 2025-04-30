@@ -12,7 +12,7 @@ spec:
       hostNetwork: true
       containers:
         - name: deconz
-          image: deconzcommunity/deconz:2.29.2
+          image: deconzcommunity/deconz:2.30.0
           securityContext:
             privileged: true
           ports:
