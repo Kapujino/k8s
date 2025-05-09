@@ -13,6 +13,67 @@ spec:
   ignoreDifferences:
     - group: apiextensions.k8s.io
       kind: CustomResourceDefinition
+      name: bgpconfigurations.crd.projectcalico.org
+      jsonPointers:
+        - /spec/preserveUnknownFields
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      name: bgppeers.crd.projectcalico.org
+      jsonPointers:
+        - /spec/preserveUnknownFields
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      name: clusterinformations.crd.projectcalico.org
+      jsonPointers:
+        - /spec/preserveUnknownFields
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      name: felixconfigurations.crd.projectcalico.org
+      jsonPointers:
+        - /spec/preserveUnknownFields
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      name: globalnetworkpolicies.crd.projectcalico.org
+      jsonPointers:
+        - /spec/preserveUnknownFields
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      name: globalnetworksets.crd.projectcalico.org
+      jsonPointers:
+        - /spec/preserveUnknownFields
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      name: hostendpoints.crd.projectcalico.org
+      jsonPointers:
+        - /spec/preserveUnknownFields
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      name: ippools.crd.projectcalico.org
+      jsonPointers:
+        - /spec/preserveUnknownFields
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      name: kubecontrollersconfigurations.crd.projectcalico.org
+      jsonPointers:
+        - /spec/preserveUnknownFields
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      name: networkpolicies.crd.projectcalico.org
+      jsonPointers:
+        - /spec/preserveUnknownFields
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      name: networksets.crd.projectcalico.org
+      jsonPointers:
+        - /spec/preserveUnknownFields
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      name: stagednetworkpolicies.crd.projectcalico.org
+      jsonPointers:
+        - /spec/preserveUnknownFields
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      name: tiers.crd.projectcalico.org
       jsonPointers:
         - /spec/preserveUnknownFields
   syncPolicy:
