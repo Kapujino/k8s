@@ -10,5 +10,10 @@ spec:
     targetRevision: main
   destination:
     server: 'https://kubernetes.default.svc'
+  ignoreDifferences:
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      jsonPointers:
+        - /spec/preserveUnknownFields
   syncPolicy:
     automated: {}
