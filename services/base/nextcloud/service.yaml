@@ -2,14 +2,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: nextcloud-http
+  name: nextcloud-https
 spec:
   type: ClusterIP
   ports:
-    - name: nextcloud-http
-      port: 80
+    - name: nextcloud-https
+      port: 443
       protocol: TCP
-      targetPort: nextcloud-http
+      targetPort: nextcloud-https
   sessionAffinity: None
 ---
 apiVersion: v1
