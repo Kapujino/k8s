@@ -10,5 +10,23 @@ spec:
     targetRevision: main
   destination:
     server: 'https://kubernetes.default.svc'
+  ignoreDifferences:
+  - group: "batch"
+    kind: "Job"
+    name: "ingress-nginx-admission-create"
+    namespace: "ingress-nginx"
+    jsonPointers:
+    - /status
+    - /metadata/annotations/argoproj.io~1sync
+  - group: "batch"
+    kind: "Job"
+    name: "ingress-nginx-admission-patch"
+    namespace: "ingress-nginx"
+    jsonPointers:
+    - /status
+    - /metadata/annotations/argoproj.io~1sync
   syncPolicy:
+    syncOptions:
+    - RespectIgnoreDifferences=true
+    - ServerSideApply=true
     automated: {}
