@@ -31,8 +31,8 @@ spec:
             name: tdarr-logs
           - mountPath: /media
             name: tdarr-media
-          - mountPath: /temp
-            name: tdarr-cache
+#          - mountPath: /temp
+#            name: tdarr-cache
       affinity:
         nodeAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -61,7 +61,7 @@ spec:
         nfs:
           server: 192.168.1.10
           path: /mnt
-      - name: tdarr-cache
-        nfs:
-          server: 192.168.1.10
-          path: /mnt/ssd/cache
+#      - name: tdarr-cache
+#        nfs:
+#          server: 192.168.1.10
+#          path: /mnt/ssd/cache
