@@ -60,9 +60,9 @@ spec:
           volumeMounts:
           - mountPath: /config
             name: plex-config-volume
-          - mountPath: /plexcache
-            name: plexcache
-            readOnly: false
+#          - mountPath: /plexcache
+#            name: plexcache
+#            readOnly: false
           - mountPath: /serien/serien
             name: serien
             readOnly: true
@@ -104,10 +104,10 @@ spec:
         hostPath:
           path: /mnt/volumes/ssd/plex
           type: Directory
-      - name: plexcache
-        hostPath:
-          path: /mnt/ssd/plexcache
-          type: Directory
+#      - name: plexcache
+#        hostPath:
+#          path: /mnt/ssd/plexcache
+#          type: Directory
       - name: serien
         hostPath:
           path: /mnt/array/disk01
