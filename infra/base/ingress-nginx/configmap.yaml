@@ -5,4 +5,4 @@ metadata:
   name: ingress-nginx-controller
 data:
   allow-snippet-annotations: "true"
-
+  annotations-risk-level: "Critical"  # Required since 1.12
