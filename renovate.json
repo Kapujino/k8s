@@ -2,22 +2,28 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "dependencyDashboard": true,
   "dependencyDashboardTitle": "Renovate Dashboard",
-  "labels": ["renovatebot"],
+  "labels": [
+    "renovatebot"
+  ],
   "extends": [
-    "config:base"
+    "config:recommended"
   ],
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["(^|/)kustomization\\.ya?ml$"],
+      "managerFilePatterns": [
+        "/(^|/)kustomization\\.ya?ml$/"
+      ],
       "matchStrings": [
         "https://github\\.com/(?<depName>[\\w-]+/[\\w-]+)/releases/download/(?<currentValue>[\\w\\.-]+)/"
       ],
       "datasourceTemplate": "github-releases"
     },
     {
-      "customType": "regex", 
-      "fileMatch": ["(^|/)kustomization\\.ya?ml$"],
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/(^|/)kustomization\\.ya?ml$/"
+      ],
       "matchStrings": [
         "https://raw\\.githubusercontent\\.com/(?<depName>[\\w-]+/[\\w-]+)/(?<currentValue>[\\w\\.-]+)/"
       ],
@@ -25,15 +31,19 @@
     },
     {
       "customType": "regex",
-      "fileMatch": ["(^|/)kustomization\\.ya?ml$"],
+      "managerFilePatterns": [
+        "/(^|/)kustomization\\.ya?ml$/"
+      ],
       "matchStrings": [
         "https://github\\.com/(?<depName>[\\w-]+/[\\w-]+)/releases/download/(?<currentValue>[\\w\\.-]+)/"
       ],
       "datasourceTemplate": "github-tags"
     },
     {
-      "customType": "regex", 
-      "fileMatch": ["(^|/)kustomization\\.ya?ml$"],
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/(^|/)kustomization\\.ya?ml$/"
+      ],
       "matchStrings": [
         "https://raw\\.githubusercontent\\.com/(?<depName>[\\w-]+/[\\w-]+)/(?<currentValue>[\\w\\.-]+)/"
       ],
@@ -41,4 +51,3 @@
     }
   ]
 }
-
