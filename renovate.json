@@ -8,6 +8,12 @@
   "extends": [
     "config:recommended"
   ],
+  "kubernetes": {
+    "managerFilePatterns": ["**/*.yaml"]
+  },
+  "kustomize": {
+    "managerFilePatterns": ["**/kustomization.yaml"]
+  },
   "customManagers": [
     {
       "customType": "regex",
