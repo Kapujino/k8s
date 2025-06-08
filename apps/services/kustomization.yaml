@@ -6,6 +6,7 @@ resources:
   - monitoring.yaml
   - flexget.yaml
   - adguard.yaml
+  - bookmarks.yaml
   - deconz.yaml
   - dl.yaml
   - fenrus.yaml
