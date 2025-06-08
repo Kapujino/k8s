@@ -22,7 +22,7 @@
         "https://raw\\.githubusercontent\\.com/(?<depName>[\\w-]+/[\\w-]+)/(?<currentValue>[\\w\\.-]+)/"
       ],
       "datasourceTemplate": "github-releases"
-    }.
+    },
     {
       "customType": "regex",
       "fileMatch": ["(^|/)kustomization\\.ya?ml$"],
