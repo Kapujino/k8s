@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bookmarks-http
+  labels:
+    app: bookmarks
+spec:
+  type: ClusterIP
+  selector:
+    app: bookmarks
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+    protocol: TCP
