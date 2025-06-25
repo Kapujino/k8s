@@ -8,7 +8,7 @@ spec:
     spec:
       containers:
       - name: thanos-store-gateway
-        image: quay.io/thanos/thanos:v0.38.0
+        image: quay.io/thanos/thanos:v0.39.0
         args:
         - "store"
         - "--objstore.config-file=/etc/config/thanos-store-gateway.yaml"
