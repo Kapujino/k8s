@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: flexget
-          image: wiserain/flexget:3.17.0
+          image: wiserain/flexget:3.17.2
           ports:
           - containerPort: 5050
             name: flexget-http
