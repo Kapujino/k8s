@@ -4,6 +4,7 @@ kind: Kustomization
 
 resources:
   - adguard
+  - caddyfile
   - deconz
   - dl
   - fenrus
@@ -17,5 +18,5 @@ resources:
   - plex
   - tautulli
   - tdarr
-  - teamspeak
+  - teamspeak6
 
