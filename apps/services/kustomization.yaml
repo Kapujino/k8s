@@ -17,7 +17,7 @@ resources:
   - ombi.yaml
   - plex.yaml
   - tautulli.yaml
-  - teamspeak.yaml
+  - teamspeak6.yaml
   - tdarr.yaml
 
 commonLabels:
