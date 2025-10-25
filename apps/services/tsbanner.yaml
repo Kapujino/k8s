@@ -1,12 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: fenrus
+  name: tsbanner
 spec:
   project: default
   source:
     repoURL: 'git@github.com:Kapujino/k8s.git'
-    path: services/base/fenrus
+    path: services/base/tsbanner
     targetRevision: main
   destination:
     server: 'https://kubernetes.default.svc'
