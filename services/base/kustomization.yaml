@@ -7,7 +7,6 @@ resources:
   - caddyfile
   - deconz
   - dl
-  - fenrus
   - firefox
   - flexget
   - homeassistant
@@ -19,4 +18,5 @@ resources:
   - tautulli
   - tdarr
   - teamspeak6
+  - tsbanner
 

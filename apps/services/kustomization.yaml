@@ -9,7 +9,6 @@ resources:
   - bookmarks.yaml
   - deconz.yaml
   - dl.yaml
-  - fenrus.yaml
   - firefox.yaml
   - homeassistant.yaml
   - ldap.yaml
