@@ -33,13 +33,13 @@ spec:
             cpu: "200m"
         livenessProbe:
           httpGet:
-            path: /
+            path: /0.png
             port: 80
           initialDelaySeconds: 30
           periodSeconds: 10
         readinessProbe:
           httpGet:
-            path: /
+            path: /0.png
             port: 80
           initialDelaySeconds: 5
           periodSeconds: 5
