@@ -60,8 +60,8 @@ spec:
       volumes:
       - name: jd-config-volume
         nfs:
-          server: 192.168.1.200
-          path: /volume1/nfs/dockerfiles/volumes/dl/jd
+          server: 192.168.1.10
+          path: /mnt/volumes/nfs/dl/jd
           readOnly: false
       - name: downloads-volume
         hostPath:
@@ -69,13 +69,13 @@ spec:
           type: Directory
       - name: jd-watch-volume
         nfs:
-          server: 192.168.1.200
-          path: /volume1/nfs/dockerfiles/volumes/dl/watch
+          server: 192.168.1.10
+          path: /mnt/volumes/nfs/dl/watch
           readOnly: false
       - name: wg-dl-config-volume
         nfs:
-          server: 192.168.1.200
-          path: /volume1/nfs/dockerfiles/volumes/dl/wg
+          server: 192.168.1.10
+          path: /mnt/volumes/nfs/dl/wg
           readOnly: false
       - name: lib-modules
         hostPath:

@@ -35,8 +35,8 @@ spec:
           name: thanos-store-gateway
       - name: thanos-data-volume
         nfs:
-          server: 192.168.1.200
-          path: /volume1/nfs/dockerfiles/volumes/monitoring/thanos/data
+          server: 192.168.1.10
+          path: /mnt/volumes/nfs/monitoring/thanos/data
           readOnly: false
       - name: thanos-store-data
         emptyDir: {}

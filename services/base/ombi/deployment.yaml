@@ -26,8 +26,8 @@ spec:
       volumes:
       - name: ombi-volume
         nfs:
-          server: 192.168.1.200
-          path: /volume1/nfs/dockerfiles/volumes/ombi/
+          server: 192.168.1.10
+          path: /mnt/volumes/nfs/ombi/
           readOnly: false
       affinity:
         nodeAffinity:

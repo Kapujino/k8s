@@ -47,16 +47,16 @@ spec:
       volumes:
       - name: tdarr-server
         nfs:
-          server: 192.168.1.200
-          path: /volume1/nfs/dockerfiles/volumes/tdarr/server
+          server: 192.168.1.10
+          path: /mnt/volumes/nfs/tdarr/server
       - name: tdarr-configs
         nfs:
-          server: 192.168.1.200
-          path: /volume1/nfs/dockerfiles/volumes/tdarr/configs
+          server: 192.168.1.10
+          path: /mnt/volumes/nfs/tdarr/configs
       - name: tdarr-logs
         nfs:
-          server: 192.168.1.200
-          path: /volume1/nfs/dockerfiles/volumes/tdarr/logs
+          server: 192.168.1.10
+          path: /mnt/volumes/nfs/tdarr/logs
       - name: tdarr-media
         nfs:
           server: 192.168.1.10

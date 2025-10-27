@@ -74,21 +74,21 @@ spec:
       volumes:
       - name: prom-config-volume
         nfs:
-          server: 192.168.1.200
-          path: /volume1/nfs/dockerfiles/volumes/monitoring/prometheus/config
+          server: 192.168.1.10
+          path: /mnt/volumes/nfs/monitoring/prometheus/config
           readOnly: false
       - name: prom-tsdb-volume
         nfs:
-          server: 192.168.1.200
-          path: /volume1/nfs/dockerfiles/volumes/monitoring/prometheus/tsdb
+          server: 192.168.1.10
+          path: /mnt/volumes/nfs/monitoring/prometheus/tsdb
           readOnly: false
       - name: thanos-config
         configMap:
           name: thanos-sidecar-config
       - name: thanos-data-volume
         nfs:
-          server: 192.168.1.200
-          path: /volume1/nfs/dockerfiles/volumes/monitoring/thanos/data
+          server: 192.168.1.10
+          path: /mnt/volumes/nfs/monitoring/thanos/data
           readOnly: false
       affinity:
         nodeAffinity:

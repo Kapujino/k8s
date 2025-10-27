@@ -52,18 +52,18 @@ spec:
       volumes:
       - name: flexget-config-volume
         nfs:
-          server: 192.168.1.200
-          path: /volume1/nfs/dockerfiles/volumes/flexget/config
+          server: 192.168.1.10
+          path: /mnt/volumes/nfs/flexget/config
           readOnly: false
       - name: flexget-watch-volume
         nfs:
-          server: 192.168.1.200
-          path: /volume1/nfs/dockerfiles/volumes/dl/watch
+          server: 192.168.1.10
+          path: /mnt/volumes/nfs/dl/watch
           readOnly: false
       - name: wg-flexget-config-volume
         nfs:
-          server: 192.168.1.200
-          path: /volume1/nfs/dockerfiles/volumes/flexget/wg
+          server: 192.168.1.10
+          path: /mnt/volumes/nfs/flexget/wg
           readOnly: false
       - name: lib-modules
         hostPath:

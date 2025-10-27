@@ -29,13 +29,13 @@ spec:
       volumes:
       - name: nextcloud-volume
         nfs:
-          server: 192.168.1.200
-          path: /volume1/nfs/dockerfiles/volumes/nextcloud/config
+          server: 192.168.1.10
+          path: /mnt/volumes/nfs/nextcloud/config
           readOnly: false
       - name: nextcloud-data-volume
         nfs:
-          server: 192.168.1.200
-          path: /volume1/nfs/dockerfiles/volumes/nextcloud/data
+          server: 192.168.1.10
+          path: /mnt/volumes/nfs/nextcloud/data
           readOnly: false
       affinity:
         nodeAffinity:
@@ -86,8 +86,8 @@ spec:
       volumes:
       - name: nextcloud-db-volume
         nfs:
-          server: 192.168.1.200
-          path: /volume1/nfs/dockerfiles/volumes/nextcloud/db
+          server: 192.168.1.10
+          path: /mnt/volumes/nfs/nextcloud/db
           readOnly: false
       affinity:
         nodeAffinity:

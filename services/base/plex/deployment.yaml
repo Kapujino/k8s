@@ -96,10 +96,10 @@ spec:
                 - zbox
       dnsPolicy: ClusterFirst
       volumes:
-      #- name: plex-config-volume
-      #  nfs:
-      #    server: 192.168.1.200
-      #    path: /volume1/nfs/dockerfiles/volumes/plex
+      #      - name: plex-config-volume
+      #        nfs:
+      #          server: 192.168.1.10
+      #          path: /mnt/volumes/nfs/plex
       - name: plex-config-volume
         hostPath:
           path: /mnt/volumes/ssd/plex
@@ -134,8 +134,8 @@ spec:
           type: Directory
       - name: musik
         nfs:
-          server: 192.168.1.200
-          path: /volume1/nfs/musik
+          server: 192.168.1.10
+          path: /mnt/volumes/nfs/musik
           readOnly: true
 #NFS VOLUMES
 #      - name: plex-config-volume
@@ -170,8 +170,8 @@ spec:
 #          readOnly: true
 #      - name: musik
 #        nfs:
-#          server: 192.168.1.200
-#          path: /volume1/nfs/musik
+#          server: 192.168.1.10
+#          path: /mnt/volumes/nfs/musik
 #          readOnly: true
 #      - name: dri
 #        hostPath:

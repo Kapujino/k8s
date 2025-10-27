@@ -56,18 +56,18 @@ spec:
       volumes:
       - name: firefox-config-volume
         nfs:
-          server: 192.168.1.200
-          path: /volume1/nfs/dockerfiles/volumes/firefox/firefox/
+          server: 192.168.1.10
+          path: /mnt/volumes/nfs/firefox/firefox/
           readOnly: false
       - name: watch-volume
         nfs:
-          server: 192.168.1.200
-          path: /volume1/nfs/dockerfiles/volumes/dl/watch
+          server: 192.168.1.10
+          path: /mnt/volumes/nfs/dl/watch
           readOnly: false
       - name: wireguard-config-volume
         nfs:
-          server: 192.168.1.200
-          path: /volume1/nfs/dockerfiles/volumes/firefox/wg/
+          server: 192.168.1.10
+          path: /mnt/volumes/nfs/firefox/wg/
           readOnly: false
       - name: lib-modules
         hostPath:

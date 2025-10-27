@@ -36,6 +36,6 @@ spec:
       volumes:
       - name: homeassistant-volume
         nfs:
-          server: 192.168.1.200
-          path: /volume1/nfs/dockerfiles/volumes/homeassistant/
+          server: 192.168.1.10
+          path: /mnt/volumes/nfs/homeassistant/
 
