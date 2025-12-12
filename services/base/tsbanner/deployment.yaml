@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: tsbanner
-        image: nginx:1.29.3
+        image: nginx:1.29.4
         ports:
         - containerPort: 80
           name: http
