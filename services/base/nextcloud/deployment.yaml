@@ -45,19 +45,20 @@ spec:
                   - key: kubernetes.io/arch
                     operator: In
                     values:
-                      - amd64
+                      - arm64
               weight: 100
-        podAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: app
-                      operator: In
-                      values:
-                        - nextcloud
-                topologyKey: kubernetes.io/hostname
+#        podAffinity:
+#          preferredDuringSchedulingIgnoredDuringExecution:
+#            - weight: 100
+#              podAffinityTerm:
+#                labelSelector:
+#                  matchExpressions:
+#                    - key: app
+#                      operator: In
+#                      values:
+#                        - nextcloud
+#                topologyKey: kubernetes.io/hostname
+
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -99,15 +100,15 @@ spec:
                     values:
                       - amd64
               weight: 100
-        podAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: app
-                      operator: In
-                      values:
-                        - nextcloud
-                topologyKey: kubernetes.io/hostname
+#        podAffinity:
+#          preferredDuringSchedulingIgnoredDuringExecution:
+#            - weight: 100
+#              podAffinityTerm:
+#                labelSelector:
+#                  matchExpressions:
+#                    - key: app
+#                      operator: In
+#                      values:
+#                        - nextcloud
+#                topologyKey: kubernetes.io/hostname
 
