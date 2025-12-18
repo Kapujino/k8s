@@ -9,9 +9,35 @@ spec:
     type: Recreate
   template:
     spec:
+      # Allow extended time for graceful shutdowns (send SIGTERM to Java and wait)
+      terminationGracePeriodSeconds: 300
       containers:
         - name: jd
           image: ghcr.io/kapujino/docker-jdownloader2:arm64
+          # Replace container PID1 with a small shell wrapper that:
+          # - starts the original start script (runs setup and start-server)
+          # - waits for the Java process (or falls back to the start script PID)
+          # - traps SIGTERM and forwards it to Java, then waits for Java to exit
+          command:
+            - /bin/sh
+            - -c
+            - |
+              # Start the original entrypoint/start script in background
+              /opt/scripts/start.sh & start_sh_pid=$!
+
+              # Wait up to 60s for java to appear; fallback to start_sh_pid
+              for i in $(seq 1 60); do
+                jpid=$(pidof java || true)
+                [ -n "$jpid" ] && break
+                sleep 1
+              done
+              [ -z "$jpid" ] && jpid=$start_sh_pid
+
+              # SIGTERM handler: forward SIGTERM to Java and wait up to 300s
+              trap 'jpid=$(pidof java || true); [ -n "$jpid" ] && kill -SIGTERM $jpid; for i in $(seq 1 300); do [ -z "$(pidof java)" ] && exit 0 || sleep 1; done; exit 143' SIGTERM
+
+              # Block as PID 1 until java (or fallback) exits
+              tail --pid=$jpid -f /dev/null
           ports:
           - containerPort: 5900
             name: jd-tcp
@@ -32,6 +58,18 @@ spec:
             name: downloads-volume
           - mountPath: /watch
             name: jd-watch-volume
+          lifecycle:
+            preStop:
+              exec:
+                # On preStop, send SIGTERM to Java and wait up to the grace period
+                command:
+                  - /bin/sh
+                  - -c
+                  - |
+                    jpid=$(pidof java || true)
+                    [ -n "$jpid" ] && kill -SIGTERM $jpid
+                    for i in $(seq 1 300); do [ -z "$(pidof java)" ] && exit 0 || sleep 1; done
+                    exit 0
         - name: wg-dl
           image: lscr.io/linuxserver/wireguard:1.0.20250521
           securityContext:
