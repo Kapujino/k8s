@@ -19,7 +19,7 @@ spec:
           # - waits for the Java process (or falls back to the start script PID)
           # - traps SIGTERM and forwards it to Java, then waits for Java to exit
           command:
-            - /bin/sh
+            - /bin/bash
             - -c
             - |
               # Start the original entrypoint/start script in background
