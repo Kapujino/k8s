@@ -9,6 +9,10 @@ spec:
     type: Recreate
   template:
     spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        supplementalGroups: [44, 107] # groups video and render for dri access
       containers:
         - name: firefox
           image: jlesage/firefox:v25.12.4
