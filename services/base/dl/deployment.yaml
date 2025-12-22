@@ -14,29 +14,36 @@ spec:
       containers:
         - name: jd
           image: ghcr.io/kapujino/docker-jdownloader2:arm64
-          # Replace container PID1 with a small shell wrapper that:
-          # - starts the original start script (runs setup and start-server)
-          # - waits for the Java process (or falls back to the start script PID)
-          # - traps SIGTERM and forwards it to Java, then waits for Java to exit
           command:
             - /bin/bash
             - -c
             - |
-              # Start the original entrypoint/start script in background
+              set -euo pipefail
+              log(){ printf '%s %s\n' "$(date -Is)" "$*" >&2; }
+
+              log "wrapper: starting /opt/scripts/start.sh in background"
               /opt/scripts/start.sh & start_sh_pid=$!
+              log "wrapper: start.sh pid=$start_sh_pid"
 
               # Wait up to 60s for java to appear; fallback to start_sh_pid
               for i in $(seq 1 60); do
                 jpid=$(pidof java || true)
-                [ -n "$jpid" ] && break
+                if [ -n "$jpid" ]; then
+                  log "wrapper: detected java pid=$jpid"
+                  break
+                fi
+                log "wrapper: waiting for java to start ($i/60)"
                 sleep 1
               done
-              [ -z "$jpid" ] && jpid=$start_sh_pid
+              if [ -z "$jpid" ]; then
+                jpid=$start_sh_pid
+                log "wrapper: java not found, falling back to start_sh_pid=$jpid"
+              fi
 
               # SIGTERM handler: forward SIGTERM to Java and wait up to 300s
-              trap 'jpid=$(pidof java || true); [ -n "$jpid" ] && kill -SIGTERM $jpid; for i in $(seq 1 300); do [ -z "$(pidof java)" ] && exit 0 || sleep 1; done; exit 143' SIGTERM
+              trap 'log "wrapper: SIGTERM received, forwarding to java"; jpid=$(pidof java || true); if [ -n "$jpid" ]; then log "wrapper: killing java pid=$jpid"; kill -SIGTERM $jpid || log "wrapper: kill failed"; else log "wrapper: no java pid to kill"; fi; for j in $(seq 1 300); do if [ -z "$(pidof java)" ]; then log "wrapper: java exited after ${j} seconds"; exit 0; else log "wrapper: waiting for java to exit (${j}/300)"; sleep 1; fi; done; log "wrapper: grace period expired, exiting 143"; exit 143' SIGTERM
 
-              # Block as PID 1 until java (or fallback) exits
+              log "wrapper: blocking as PID 1 until pid $jpid exits"
               tail --pid=$jpid -f /dev/null
           ports:
           - containerPort: 5900
@@ -61,14 +68,32 @@ spec:
           lifecycle:
             preStop:
               exec:
-                # On preStop, send SIGTERM to Java and wait up to the grace period
                 command:
                   - /bin/sh
                   - -c
                   - |
+                    log(){ printf '%s %s\n' "$(date -Is)" "$*" >&2; }
+                    log "preStop: initiated"
+
                     jpid=$(pidof java || true)
-                    [ -n "$jpid" ] && kill -SIGTERM $jpid
-                    for i in $(seq 1 300); do [ -z "$(pidof java)" ] && exit 0 || sleep 1; done
+                    if [ -n "$jpid" ]; then
+                      log "preStop: found java pid=$jpid, sending SIGTERM"
+                      kill -SIGTERM $jpid || log "preStop: kill returned $?"
+                    else
+                      log "preStop: no java pid found"
+                    fi
+
+                    # Wait up to 300s for java to exit
+                    for i in $(seq 1 300); do
+                      if [ -z "$(pidof java)" ]; then
+                        log "preStop: java exited after $i seconds"
+                        exit 0
+                      fi
+                      log "preStop: waiting for java to exit ($i/300)"
+                      sleep 1
+                    done
+
+                    log "preStop: grace period expired, continuing shutdown"
                     exit 0
         - name: wg-dl
           image: lscr.io/linuxserver/wireguard:1.0.20250521
