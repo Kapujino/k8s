@@ -27,6 +27,8 @@ spec:
             name: firefox-config-volume
           - mountPath: /config/downloads
             name: watch-volume
+          - mountPath: /dev/dri
+            name: dri-device
         - name: wireguard
           image: linuxserver/wireguard:1.0.20250521
           securityContext:
@@ -72,3 +74,7 @@ spec:
       - name: lib-modules
         hostPath:
           path: /lib/modules
+      - name: dri-device
+        hostPath:
+          path: /dev/dri
+          type: Directory
