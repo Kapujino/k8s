@@ -9,16 +9,17 @@ spec:
     type: Recreate
   template:
     spec:
+      securityContext:
+        supplementalGroups: [44, 107] # groups video and render for DRI access
       containers:
         - name: firefox
           image: jlesage/firefox:v25.12.4
+          securityContext:
+            privileged: true
           ports:
           - containerPort: 5900
             name: firefox-tcp
             protocol: TCP
-          - containerPort: 5900
-            name: firefox-udp
-            protocol: UDP
           envFrom:
             - configMapRef:
                 name: firefox-env
@@ -27,6 +28,8 @@ spec:
             name: firefox-config-volume
           - mountPath: /config/downloads
             name: watch-volume
+          - mountPath: /dev/dri
+            name: dri-device
         - name: wireguard
           image: linuxserver/wireguard:1.0.20250521
           securityContext:
@@ -72,4 +75,8 @@ spec:
       - name: lib-modules
         hostPath:
           path: /lib/modules
+      - name: dri-device
+        hostPath:
+          path: /dev/dri
+          type: Directory
 
