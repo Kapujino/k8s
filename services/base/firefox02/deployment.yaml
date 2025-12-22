@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: firefox2
+  name: firefox02
 spec:
   replicas: 1
   strategy:
@@ -17,15 +17,12 @@ spec:
           securityContext:
             privileged: true
           ports:
-          - containerPort: 5800
-            name: firefox-tcp-web
-            protocol: TCP
           - containerPort: 5900
             name: firefox-tcp-vnc
             protocol: TCP
           envFrom:
             - configMapRef:
-                name: firefox2-env
+                name: firefox02-env
           volumeMounts:
           - mountPath: /config
             name: firefox-config-volume
@@ -57,13 +54,13 @@ spec:
               - key: kubernetes.io/hostname
                 operator: In
                 values:
-                - rp4node01
+                - rp4node02
       dnsPolicy: ClusterFirst
       volumes:
       - name: firefox-config-volume
         nfs:
           server: 192.168.1.10
-          path: /mnt/volumes/nfs/firefox2/firefox/
+          path: /mnt/volumes/nfs/firefox02/firefox/
           readOnly: false
       - name: watch-volume
         nfs:
@@ -73,7 +70,7 @@ spec:
       - name: wireguard-config-volume
         nfs:
           server: 192.168.1.10
-          path: /mnt/volumes/nfs/firefox2/wg/
+          path: /mnt/volumes/nfs/firefox02/wg/
           readOnly: false
       - name: lib-modules
         hostPath:

@@ -7,4 +7,4 @@ resources:
   - service.yaml
 
 commonLabels:
-  app: firefox2
+  app: firefox02

@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: firefox02-service
+spec:
+  type: NodePort
+  ports:
+    - name: firefox-tcp-vnc
+      port: 5900
+      protocol: TCP
+      nodePort: 31002
+      targetPort: firefox-tcp-vnc
+  sessionAffinity: None

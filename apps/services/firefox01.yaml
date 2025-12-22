@@ -1,12 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: firefox2
+  name: firefox01
 spec:
   project: default
   source:
     repoURL: 'git@github.com:Kapujino/k8s.git'
-    path: services/base/firefox2
+    path: services/base/firefox01
     targetRevision: main
   destination:
     server: 'https://kubernetes.default.svc'

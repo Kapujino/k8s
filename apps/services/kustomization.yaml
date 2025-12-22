@@ -10,7 +10,8 @@ resources:
   - deconz.yaml
   - dl.yaml
   - firefox.yaml
-  - firefox2.yaml
+  - firefox01.yaml
+  - firefox02.yaml
   - homeassistant.yaml
   - ldap.yaml
   - nextcloud.yaml
