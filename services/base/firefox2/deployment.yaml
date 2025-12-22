@@ -14,6 +14,9 @@ spec:
       containers:
         - name: firefox
           image: jlesage/firefox:v25.12.4
+          securityContext:
+            capabilities:
+              add: ["SYS_ADMIN", "IPC_LOCK"]
           ports:
           - containerPort: 5800
             name: firefox-tcp-web
