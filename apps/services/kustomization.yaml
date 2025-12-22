@@ -10,6 +10,7 @@ resources:
   - deconz.yaml
   - dl.yaml
   - firefox.yaml
+  - firefox2.yaml
   - homeassistant.yaml
   - ldap.yaml
   - nextcloud.yaml
@@ -19,6 +20,7 @@ resources:
   - teamspeak6.yaml
   - tdarr.yaml
   - tsbanner.yaml
+
 
 commonLabels:
   app.kubernetes.io/app-type: services
