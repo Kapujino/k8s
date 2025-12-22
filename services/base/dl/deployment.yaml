@@ -25,8 +25,8 @@ spec:
               /opt/scripts/start.sh & start_sh_pid=$!
               log "wrapper: start.sh pid=$start_sh_pid"
 
-              # Wait up to 60s for java to appear; fallback to start_sh_pid
-              for i in $(seq 1 60); do
+              # Wait up to 300s for java to appear; fallback to start_sh_pid
+              for i in $(seq 1 300); do
                 jpid=$(pidof java || true)
                 if [ -n "$jpid" ]; then
                   log "wrapper: detected java pid=$jpid"
@@ -45,6 +45,9 @@ spec:
 
               log "wrapper: blocking as PID 1 until pid $jpid exits"
               tail --pid=$jpid -f /dev/null
+
+              # workaround - removes trap code
+              exec sleep infinity
           ports:
           - containerPort: 5900
             name: jd-tcp
