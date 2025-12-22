@@ -1,0 +1,74 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: firefox2
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    spec:
+      containers:
+        - name: firefox
+          image: jlesage/firefox:v25.12.4
+          ports:
+          - containerPort: 5800
+            name: firefox-tcp-web
+            protocol: TCP
+          - containerPort: 5900
+            name: firefox-tcp-vnc
+            protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: firefox2-env
+          volumeMounts:
+          - mountPath: /config
+            name: firefox-config-volume
+          - mountPath: /config/downloads
+            name: watch-volume
+        - name: wireguard
+          image: linuxserver/wireguard:1.0.20250521
+          securityContext:
+            privileged: true
+          envFrom:
+            - configMapRef:
+                name: default-env-internal
+          volumeMounts:
+          - mountPath: /config
+            name: wireguard-config-volume
+          - mountPath: /lib/modules #wg kernel module
+            name: lib-modules
+      hostAliases:
+      - ip: "192.168.1.104"
+        hostnames:
+        - "192-168-1-104.mydns.jdownloader.org"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - rp4node01
+      dnsPolicy: ClusterFirst
+      volumes:
+      - name: firefox-config-volume
+        nfs:
+          server: 192.168.1.10
+          path: /mnt/volumes/nfs/firefox2/firefox/
+          readOnly: false
+      - name: watch-volume
+        nfs:
+          server: 192.168.1.10
+          path: /mnt/volumes/nfs/dl/watch
+          readOnly: false
+      - name: wireguard-config-volume
+        nfs:
+          server: 192.168.1.10
+          path: /mnt/volumes/nfs/firefox2/wg/
+          readOnly: false
+      - name: lib-modules
+        hostPath:
+          path: /lib/modules
