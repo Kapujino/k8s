@@ -10,10 +10,10 @@ spec:
       port: 5800
       protocol: TCP
       targetPort: firefox-tcp-web
-      nodePort: 30001
+      nodePort: 30010
     - name: firefox-tcp-vnc
       port: 5900
       protocol: TCP
-      nodePort: 30002
+      nodePort: 30011
       targetPort: firefox-tcp-vnc
   sessionAffinity: None
