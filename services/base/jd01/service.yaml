@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jd01-service
+spec:
+  type: NodePort
+  ports:
+    - name: jd-tcp
+      port: 5900
+      protocol: TCP
+      nodePort: 32001
+      targetPort: jd-tcp
+    - name: jd-udp
+      port: 5900
+      protocol: UDP
+      nodePort: 32001
+      targetPort: jd-udp
+  sessionAffinity: None
+

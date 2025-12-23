@@ -9,6 +9,7 @@ resources:
   - bookmarks.yaml
   - deconz.yaml
   - dl.yaml
+  - jd01.yaml
   - firefox.yaml
   - firefox01.yaml
   - firefox02.yaml
