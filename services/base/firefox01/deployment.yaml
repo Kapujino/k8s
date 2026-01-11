@@ -13,7 +13,7 @@ spec:
         supplementalGroups: [44, 107] # groups video and render for dri access
       containers:
         - name: firefox
-          image: jlesage/firefox:v25.12.5
+          image: jlesage/firefox:v26.01.1
           securityContext:
             privileged: true
           ports:
