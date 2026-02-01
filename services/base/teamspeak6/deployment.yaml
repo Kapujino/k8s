@@ -12,7 +12,7 @@ spec:
       hostNetwork:  true
       containers:
         - name: teamspeak6
-          image: teamspeaksystems/teamspeak6-server:v6.0.0-beta7
+          image: teamspeaksystems/teamspeak6-server:v6.0.0-beta8
           envFrom:
             - configMapRef:
                 name: teamspeak-env
