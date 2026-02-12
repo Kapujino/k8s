@@ -41,7 +41,7 @@ spec:
           - mountPath: /prometheus
             name: prom-tsdb-volume
         - name: thanos-sidecar
-          image: quay.io/thanos/thanos:v0.40.1
+          image: quay.io/thanos/thanos:v0.41.0
           args:
           - "sidecar"
           - "--tsdb.path=/prometheus"

@@ -37,7 +37,7 @@ spec:
                   memory: 1Mi
           containers:
             - name: compactor
-              image: quay.io/thanos/thanos:v0.40.1
+              image: quay.io/thanos/thanos:v0.41.0
               resources:
                 limits:
                   cpu: "2000m"
