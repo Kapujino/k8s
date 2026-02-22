@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: firefox02
 spec:
-  replicas: 1
+  replicas: 0
   strategy:
     type: Recreate
   template:
@@ -13,7 +13,7 @@ spec:
         supplementalGroups: [44, 107] # groups video and render for dri access
       containers:
         - name: firefox
-          image: jlesage/firefox:v26.01.1
+          image: jlesage/firefox:v26.02.2
           securityContext:
             privileged: true
           ports:
