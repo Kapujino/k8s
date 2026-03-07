@@ -11,10 +11,5 @@ spec:
       protocol: TCP
       targetPort: firefox-tcp
       nodePort: 30000
-    - name: firefox-udp
-      port: 5900
-      protocol: UDP
-      nodePort: 30000
-      targetPort: firefox-udp
   sessionAffinity: None
 
