@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: bookmarks
-        image: nginx:1.29.6
+        image: nginx:1.29.7
         ports:
         - containerPort: 80
           name: http
