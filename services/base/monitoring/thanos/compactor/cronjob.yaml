@@ -19,7 +19,7 @@ spec:
           restartPolicy: Never
           initContainers:
             - name: delay-pod-execution
-              image: busybox:1.37
+              image: busybox:1.38
               imagePullPolicy: IfNotPresent
               env:
                 - name: DELAY_WINDOW_SECONDS
