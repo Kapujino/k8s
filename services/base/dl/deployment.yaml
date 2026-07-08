@@ -97,7 +97,7 @@ spec:
                     log "preStop: grace period expired, continuing shutdown"
                     exit 0
         - name: wg-dl
-          image: lscr.io/linuxserver/wireguard:1.0.20250521
+          image: lscr.io/linuxserver/wireguard:1.0.20260223
           securityContext:
             capabilities:
               add:
