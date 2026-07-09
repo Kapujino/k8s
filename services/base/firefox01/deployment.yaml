@@ -34,7 +34,7 @@ spec:
           - mountPath: /dev/dri
             name: dri-device
         - name: wireguard
-          image: linuxserver/wireguard:1.0.20250521
+          image: linuxserver/wireguard:1.0.20260223
           securityContext:
             privileged: true
           envFrom:
