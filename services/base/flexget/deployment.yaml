@@ -25,7 +25,7 @@ spec:
           - mountPath: /data/flexget/direct_links/
             name: flexget-watch-volume
         - name: wg-flexget
-          image: linuxserver/wireguard:1.0.20250521
+          image: linuxserver/wireguard:1.0.20260223
           securityContext:
             capabilities:
               add:
