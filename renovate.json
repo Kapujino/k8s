@@ -14,15 +14,13 @@
   "kustomize": {
     "managerFilePatterns": ["**/kustomization.yaml"]
   },
-  {
-    "packageRules": [
-      {
-        "matchDatasources": ["docker"],
-        "matchPackageNames": ["teamspeaksystems/teamspeak6-server"],
-        "versioning": "semver"
-      }
-    ]
-  },
+  "packageRules": [
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["teamspeaksystems/teamspeak6-server"],
+      "versioning": "semver"
+    }
+  ],
   "customManagers": [
     {
       "customType": "regex",
