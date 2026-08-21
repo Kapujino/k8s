@@ -1,0 +1,64 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: traefik
+spec:
+  project: default
+  source:
+    repoURL: https://traefik.github.io/charts
+    chart: traefik
+    targetRevision: "41.2.0"        # chart version; appVersion v3.7.10
+    helm:
+      version: "41.2.0"
+      values: |
+        # --- pin to zbox (same pattern as infra/base/ingress-nginx/zbox_pin.yaml)
+        nodeSelector:
+          kubernetes.io/hostname: zbox
+        # --- Service: LoadBalancer + MetalLB pinned to .211 + Prometheus scrape
+        service:
+          spec:
+            type: LoadBalancer
+          annotations:
+            metallb.universe.tf/ip-allocated-from-pool: "default-pool"
+            metallb.universe.tf/loadBalancerIPs: "192.168.1.211"
+            prometheus.io/scrape: "true"
+            prometheus.io/path: "/metrics"
+            prometheus.io/port: "9100"
+        # --- entrypoints: expose metrics (9100) + dashboard (8080); web/websecure default
+        ports:
+          web:        { port: 8000, expose: { default: true },  exposedPort: 80 }
+          websecure:  { port: 8443, expose: { default: true },  exposedPort: 443 }
+          traefik:    { port: 8080, expose: { default: true },  exposedPort: 8080 }
+          metrics:    { port: 9100, expose: { default: true },  exposedPort: 9100 }
+        # --- providers: only class traefik; CRDs on; gateway/file/nginx/knative off
+        providers:
+          kubernetesIngress:
+            enabled: true
+            ingressClass: traefik
+            publishedService: { enabled: true }
+          kubernetesCRD:
+            enabled: true
+            ingressClass: traefik
+          kubernetesGateway: { enabled: false }
+          file:              { enabled: false }
+          kubernetesIngressNGINX: { enabled: false }
+          knative:           { enabled: false }
+        gateway:      { enabled: false }
+        gatewayClass: { enabled: false }
+        # --- IngressClass traefik, NOT default (decision 8)
+        ingressClass:
+          enabled: true
+          name: traefik
+          isDefaultClass: false
+        # --- RBAC: cluster-wide (read Ingress/Service/Secret across namespaces)
+        rbac: { enabled: true, namespaced: false }
+        # --- dashboard on
+        api: { dashboard: true }
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: traefik
+  syncPolicy:
+    syncOptions:
+    - RespectIgnoreDifferences=true
+    - ServerSideApply=true
+    automated: {}
