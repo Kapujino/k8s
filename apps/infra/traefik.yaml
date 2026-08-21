@@ -9,7 +9,6 @@ spec:
     chart: traefik
     targetRevision: "41.2.0"        # chart version; appVersion v3.7.10
     helm:
-      version: "41.2.0"
       values: |
         # --- pin to zbox (same pattern as infra/base/ingress-nginx/zbox_pin.yaml)
         nodeSelector:
