@@ -52,7 +52,7 @@ spec:
         # --- RBAC: cluster-wide (read Ingress/Service/Secret across namespaces)
         rbac: { enabled: true, namespaced: false }
         # --- dashboard on
-        api: { dashboard: true }
+        api: { dashboard: true, insecure: true }
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: traefik
