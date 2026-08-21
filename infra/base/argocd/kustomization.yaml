@@ -19,6 +19,11 @@ patchesJson6902:
     kind: Service
     name: argocd-metrics
   path: service.yaml
+- target:
+    version: v1
+    kind: Service
+    name: argocd-server
+  path: service-server.yaml
 
 commonLabels:
   app: argocd

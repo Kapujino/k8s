@@ -1,0 +1,4 @@
+- op: add
+  path: /metadata/annotations
+  value:
+    traefik.ingress.kubernetes.io/service.serverstransport: "argocd-argocd-insecure@kubernetescrd"
