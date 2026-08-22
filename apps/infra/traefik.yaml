@@ -13,13 +13,13 @@ spec:
         # --- pin to zbox (same pattern as infra/base/ingress-nginx/zbox_pin.yaml)
         nodeSelector:
           kubernetes.io/hostname: zbox
-        # --- Service: LoadBalancer + MetalLB pinned to .211 + Prometheus scrape
+        # --- Service: LoadBalancer + MetalLB pinned to .210 + Prometheus scrape
         service:
           spec:
             type: LoadBalancer
           annotations:
             metallb.universe.tf/ip-allocated-from-pool: "default-pool"
-            metallb.universe.tf/loadBalancerIPs: "192.168.1.211"
+            metallb.universe.tf/loadBalancerIPs: "192.168.1.210"
             prometheus.io/scrape: "true"
             prometheus.io/path: "/metrics"
             prometheus.io/port: "9100"
