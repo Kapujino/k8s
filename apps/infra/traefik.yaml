@@ -53,6 +53,10 @@ spec:
         rbac: { enabled: true, namespaced: false }
         # --- dashboard on
         api: { dashboard: true, insecure: true }
+        # --- access logs (stdout)
+        accessLog:
+          enabled: true
+          # format: common   # default; set to json for machine-readable
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: traefik
