@@ -4,7 +4,6 @@ namespace: argocd
 
 resources:
   - calico.yaml
-  - ingress-nginx.yaml
   - metallb.yaml
   - argocd.yaml
   - traefik.yaml
