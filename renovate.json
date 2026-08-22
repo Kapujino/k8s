@@ -61,6 +61,38 @@
         "https://raw\\.githubusercontent\\.com/(?<depName>[\\w-]+/[\\w-]+)/(?<currentValue>[\\w\\.-]+)/"
       ],
       "datasourceTemplate": "github-tags"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/(^|/)kustomization\\.ya?ml$/"
+      ],
+      "matchStrings": [
+        "github\\.com/(?<depName>[\\w-]+/[\\w-]+)/[^\\s?]+\\?ref=(?<currentValue>[\\w.\\-]+)"
+      ],
+      "datasourceTemplate": "github-releases"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/(^|/)kustomization\\.ya?ml$/"
+      ],
+      "matchStrings": [
+        "github\\.com/(?<depName>[\\w-]+/[\\w-]+)/[^\\s?]+\\?ref=(?<currentValue>[\\w.\\-]+)"
+      ],
+      "datasourceTemplate": "github-tags"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/(^|/)apps\\/infra\\/traefik\\.ya?ml$/"
+      ],
+      "matchStrings": [
+        "chart: traefik\\s*\\n\\s*targetRevision:\\s*\"(?<currentValue>[\\w.\\-]+)\""
+      ],
+      "depNameTemplate": "traefik",
+      "datasourceTemplate": "helm",
+      "registryUrlTemplate": "https://traefik.github.io/charts"
     }
   ]
 }
