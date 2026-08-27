@@ -111,6 +111,8 @@ spec:
                   ipDenyList:
                     - 172.191.149.99
                     - 20.220.10.235
+                    - 164.92.88.108
+                    - 198.235.24.175
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: traefik
