@@ -34,7 +34,7 @@ spec:
             http:
               aliasHeadersStrategy: delete
               middlewares:
-                - block-ips@kubernetescrd
+                - default-block-ips@kubernetescrd
               encodedCharacters:
                 allowEncodedSlash: true
                 allowEncodedBackSlash: true
@@ -50,7 +50,7 @@ spec:
             http:
               aliasHeadersStrategy: delete
               middlewares:
-                - block-ips@kubernetescrd
+                - default-block-ips@kubernetescrd
               encodedCharacters:
                 allowEncodedSlash: true
                 allowEncodedBackSlash: true
