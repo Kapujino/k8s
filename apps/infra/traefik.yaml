@@ -7,13 +7,11 @@ spec:
   source:
     repoURL: https://traefik.github.io/charts
     chart: traefik
-    targetRevision: "41.4.0"        # chart version; appVersion v3.7.10
+    targetRevision: "41.4.0"
     helm:
       values: |
-        # --- pin to zbox (same pattern as infra/base/ingress-nginx/zbox_pin.yaml)
         nodeSelector:
           kubernetes.io/hostname: zbox
-        # --- Service: LoadBalancer + MetalLB pinned to .210 + Prometheus scrape
         service:
           spec:
             type: LoadBalancer
@@ -23,13 +21,49 @@ spec:
             prometheus.io/scrape: "true"
             prometheus.io/path: "/metrics"
             prometheus.io/port: "9100"
-        # --- entrypoints: expose metrics (9100) + dashboard (8080); web/websecure default
         ports:
-          web:        { port: 8000, expose: { default: true },  exposedPort: 80 }
-          websecure:  { port: 8443, expose: { default: true },  exposedPort: 443 }
-          traefik:    { port: 8080, expose: { default: true },  exposedPort: 8080 }
-          metrics:    { port: 9100, expose: { default: true },  exposedPort: 9100 }
-        # --- providers: only class traefik; CRDs on; gateway/file/nginx/knative off
+          web:
+            port: 8000
+            expose: { default: true }
+            exposedPort: 80
+            http:
+              aliasHeadersStrategy: delete
+              encodedCharacters:
+                allowEncodedSlash: true
+                allowEncodedBackSlash: true
+                allowEncodedNullCharacter: true
+                allowEncodedSemicolon: true
+                allowEncodedPercent: true
+                allowEncodedQuestionMark: true
+                allowEncodedHash: true
+          websecure:
+            port: 8443
+            expose: { default: true }
+            exposedPort: 443
+            http:
+              aliasHeadersStrategy: delete
+              encodedCharacters:
+                allowEncodedSlash: true
+                allowEncodedBackSlash: true
+                allowEncodedNullCharacter: true
+                allowEncodedSemicolon: true
+                allowEncodedPercent: true
+                allowEncodedQuestionMark: true
+                allowEncodedHash: true
+          traefik:
+            port: 8080
+            expose: { default: true }
+            exposedPort: 8080
+            http:
+              aliasHeadersStrategy: keep
+          metrics:
+            port: 9100
+            expose: { default: true }
+            exposedPort: 9100
+            http:
+              aliasHeadersStrategy: keep
+        core:
+          strictTLSOptions: true
         providers:
           kubernetesIngress:
             enabled: true
@@ -38,25 +72,24 @@ spec:
           kubernetesCRD:
             enabled: true
             ingressClass: traefik
+            defaultTLSResourcesNamespace: traefik
           kubernetesGateway: { enabled: false }
           file:              { enabled: false }
           kubernetesIngressNGINX: { enabled: false }
           knative:           { enabled: false }
         gateway:      { enabled: false }
         gatewayClass: { enabled: false }
-        # --- IngressClass traefik, NOT default (decision 8)
         ingressClass:
           enabled: true
           name: traefik
           isDefaultClass: false
-        # --- RBAC: cluster-wide (read Ingress/Service/Secret across namespaces)
         rbac: { enabled: true, namespaced: false }
-        # --- dashboard on
         api: { dashboard: true, insecure: true }
-        # --- access logs (stdout)
         accessLog:
           enabled: true
           # format: common   # default; set to json for machine-readable
+        additionalArguments:
+          - "--providers.kubernetescrd.safeNaming=false"
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: traefik
