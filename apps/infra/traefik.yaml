@@ -113,6 +113,7 @@ spec:
                     - 20.220.10.235
                     - 164.92.88.108
                     - 198.235.24.175
+                    - 164.92.109.217
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: traefik
