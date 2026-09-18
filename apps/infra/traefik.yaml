@@ -99,25 +99,6 @@ spec:
           # format: common   # default; set to json for machine-readable
         additionalArguments:
           - "--providers.kubernetescrd.safeNaming=false"
-        extraObjects:
-          - apiVersion: traefik.io/v1alpha1
-            kind: Middleware
-            metadata:
-              name: block-ips
-              namespace: default
-            spec:
-              plugin:
-                denyip:
-                  ipDenyList:
-                    - 172.191.149.99
-                    - 20.220.10.235
-                    - 164.92.88.108
-                    - 198.235.24.175
-                    - 164.92.109.217
-                    - 34.107.67.136
-                    - 23.236.59.79
-                    - 47.84.100.21
-                    - 85.105.125.15
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: traefik
