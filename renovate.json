@@ -19,6 +19,11 @@
       "matchDatasources": ["docker"],
       "matchPackageNames": ["teamspeaksystems/teamspeak6-server"],
       "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-beta(?<build>\\d+)(?:\\.(?<revision>\\d+))?$"
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["lscr.io/linuxserver/ombi"],
+      "versioning": "regex:^v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-ls(?<build>\\d+)$"
     }
   ],
   "customManagers": [

@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: ombi
-          image: lscr.io/linuxserver/ombi:4.53.10
+          image: lscr.io/linuxserver/ombi:v4.53.10-ls269
           ports:
           - containerPort: 3579
             name: ombi-http
