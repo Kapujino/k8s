@@ -4,12 +4,15 @@ kind: Kustomization
 
 resources:
   - adguard
-  - caddyfile
+  - bookmarks
   - deconz
   - dl
   - firefox
+  - firefox01
+  - firefox02
   - flexget
   - homeassistant
+  - jd01
   - ldap
   - monitoring
   - nextcloud
