@@ -4,23 +4,16 @@ namespace: argocd
 
 resources:
   - monitoring.yaml
-  - flexget.yaml
   - adguard.yaml
   - bookmarks.yaml
-  - deconz.yaml
-  - dl.yaml
   - jd01.yaml
   - firefox.yaml
-  - firefox01.yaml
-  - firefox02.yaml
   - homeassistant.yaml
   - ldap.yaml
   - nextcloud.yaml
-  - ombi.yaml
   - plex.yaml
   - tautulli.yaml
   - teamspeak6.yaml
-  - tdarr.yaml
   - tsbanner.yaml
 
 

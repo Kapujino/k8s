@@ -5,21 +5,14 @@ kind: Kustomization
 resources:
   - adguard
   - bookmarks
-  - deconz
-  - dl
   - firefox
-  - firefox01
-  - firefox02
-  - flexget
   - homeassistant
   - jd01
   - ldap
   - monitoring
   - nextcloud
-  - ombi
   - plex
   - tautulli
-  - tdarr
   - teamspeak6
   - tsbanner
 

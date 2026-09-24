@@ -4,7 +4,6 @@ namespace: default
 
 resources:
   - deployment.yaml
-  - service.yaml
 
 commonLabels:
   app: plex
