@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: authelia
+spec:
+  project: default
+  source:
+    repoURL: https://charts.authelia.com
+    chart: authelia
+    targetRevision: "0.11.22"
+    helm:
+      values: |
+        configMap:
+          existingConfigMap: authelia-config
+        pod:
+          extraVolumes:
+            - name: users
+              configMap:
+                name: authelia-users
+            - name: data
+              emptyDir: {}
+          extraVolumeMounts:
+            - name: users
+              mountPath: /config
+            - name: data
+              mountPath: /data
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: auth
+  syncPolicy:
+    syncOptions:
+    - RespectIgnoreDifferences=true
+    - ServerSideApply=true
+    automated: {}
