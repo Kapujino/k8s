@@ -13,6 +13,8 @@ spec:
         configMap:
           existingConfigMap: authelia-config
         pod:
+          kind: Deployment
+          replicas: 1
           extraVolumes:
             - name: users
               configMap:
