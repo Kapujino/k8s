@@ -1,0 +1,24 @@
+# MetalLB v0.16 serves :9120 over native TLS with RBAC
+# (controller-runtime filters.WithAuthenticationAndAuthorization):
+# the speaker/controller must be able to create TokenReviews and
+# SubjectAccessReviews to authenticate/authorize the scraper,
+# otherwise every scrape fails (401/500).
+# Mirrors upstream config/prometheus-native/rbac-patch.yaml (v0.16.1).
+- op: add
+  path: /rules/0
+  value:
+    apiGroups:
+      - authentication.k8s.io
+    resources:
+      - tokenreviews
+    verbs:
+      - create
+- op: add
+  path: /rules/0
+  value:
+    apiGroups:
+      - authorization.k8s.io
+    resources:
+      - subjectaccessreviews
+    verbs:
+      - create

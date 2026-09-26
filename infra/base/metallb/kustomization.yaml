@@ -17,3 +17,23 @@ patches:
   - path: speaker-prom-patch.yaml
   - path: controller-prom-patch.yaml
 
+# MetalLB v0.16 serves :9120 with native TLS + RBAC auth
+# (controller-runtime WithAuthenticationAndAuthorization filter): the
+# speaker/controller must be able to create TokenReviews and
+# SubjectAccessReviews to authenticate/authorize the scraper, otherwise
+# every scrape fails with 401/500. Mirrors upstream
+# config/prometheus-native/rbac-patch.yaml (v0.16.1). The scraper side is
+# already covered: prometheus runs as monitoring/default, bound to the
+# "prometheus" ClusterRole which allows get on nonResourceURLs /metrics,
+# and presents its SA token via bearer_token_file in prometheus.yml.
+patchesJson6902:
+  - target:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRole
+      name: metallb-system:controller
+    path: rbac-metrics-patch.yaml
+  - target:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRole
+      name: metallb-system:speaker
+    path: rbac-metrics-patch.yaml
