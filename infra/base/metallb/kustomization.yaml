@@ -8,3 +8,12 @@ resources:
   - github.com/metallb/metallb/config/native?ref=v0.16.1
   - metallb_ip_range.yaml
 
+# MetalLB v0.16 native manifests annotate the pods for prometheus scraping
+# (scrape=true, port=9120) but 9120 is the HTTPS metrics port and the
+# scheme annotation is missing, so prometheus scraped plain HTTP and got
+# 400 on all 4 targets. Add the scheme so the existing prometheus.io/scheme
+# relabel in prometheus' kubernetes-pods job switches those targets to https.
+patches:
+  - path: speaker-prom-patch.yaml
+  - path: controller-prom-patch.yaml
+

@@ -1,0 +1,10 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: controller
+  namespace: metallb-system
+spec:
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scheme: "https"
