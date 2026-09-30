@@ -15,6 +15,7 @@ spec:
         pod:
           kind: Deployment
           replicas: 1
+          disableRestartOnChanges: true
           extraVolumes:
             - name: users
               configMap:
@@ -34,3 +35,8 @@ spec:
     - RespectIgnoreDifferences=true
     - ServerSideApply=true
     automated: {}
+  ignoreDifferences:
+  - group: ""
+    kind: Secret
+    name: authelia
+    jsonPath: .data
