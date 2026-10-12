@@ -20,10 +20,10 @@ spec:
                 - sh
                 - -c
                 - |
-                  deadline=$(( $(date) + 600 ))
+                  deadline=$(( $(date +%s) + 600 ))
                   # Stage 1: DNS resolution (pod -> coredns -> AdGuard -> router -> WAN)
                   until getent hosts plugins.traefik.io >/dev/null 2>&1; do
-                    if [ "$(date)" -ge "$deadline" ]; then
+                    if [ "$(date +%s)" -ge "$deadline" ]; then
                       echo "DNS for plugins.traefik.io not working after 10m; starting traefik anyway"
                       exit 0
                     fi
@@ -33,7 +33,7 @@ spec:
                   echo "DNS OK"
                   # Stage 2: egress + TLS to the actual download endpoint
                   until wget -q -T 10 -O /dev/null https://plugins.traefik.io/public/download/github.com/kvncrw/denyip/v1.3.0 2>/dev/null; do
-                    if [ "$(date)" -ge "$deadline" ]; then
+                    if [ "$(date +%s)" -ge "$deadline" ]; then
                       echo "plugins.traefik.io not reachable after 10m; starting traefik anyway"
                       exit 0
                     fi
