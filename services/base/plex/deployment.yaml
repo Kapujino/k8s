@@ -12,7 +12,7 @@ spec:
       hostNetwork:  true
       containers:
         - name: plex
-          image: lscr.io/linuxserver/plex@sha256:06e07af2851e6a822e89062b148435495dd794d6d5aaf36247dee05fb3dcc4b8
+          image: lscr.io/linuxserver/plex@sha256:fc852e4c21359252896227aaafd48d7f052c0142cbe8e1ac3068d060faeb6d56
           #image: plexinc/pms-docker
           # use resources otherwise logs will eat your ephemeral-storage
           # resulting in root `/` at 100% on nodes and pods becoming 
