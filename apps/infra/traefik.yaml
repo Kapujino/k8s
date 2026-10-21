@@ -7,7 +7,7 @@ spec:
   source:
     repoURL: https://traefik.github.io/charts
     chart: traefik
-    targetRevision: "42.0.0"
+    targetRevision: "42.1.2"
     helm:
       values: |
         nodeSelector:
