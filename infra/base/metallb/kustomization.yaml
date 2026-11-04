@@ -5,7 +5,7 @@ namespace: metallb-system
 
 #https://metallb.universe.tf/installation/
 resources:
-  - github.com/metallb/metallb/config/native?ref=v0.16.1
+  - github.com/metallb/metallb/config/native?ref=v0.16.2
   - metallb_ip_range.yaml
 
 # MetalLB v0.16 native manifests annotate the pods for prometheus scraping
